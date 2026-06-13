@@ -46,50 +46,7 @@
       flex-direction: column;
     }
 
-    /* Penalty flash */
-    @keyframes penaltyFlash {
-      0% {
-        background-color: rgba(255, 45, 120, 0);
-      }
-
-      30% {
-        background-color: rgba(255, 45, 120, 0.3);
-      }
-
-      100% {
-        background-color: rgba(255, 45, 120, 0);
-      }
-    }
-
-    .penalty-flash {
-      animation: penaltyFlash 0.8s ease-out;
-    }
-
-    /* Penalty floating badge */
-    #penalty-badge {
-      position: fixed;
-      top: 28%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(140, 0, 50, 0.97);
-      color: #fff;
-      padding: 10px 28px;
-      border-radius: 4px;
-      font-family: 'Orbitron', sans-serif;
-      font-size: clamp(0.9rem, 2vw, 1.4rem);
-      font-weight: 700;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.3s;
-      z-index: 300;
-      border: 1px solid var(--neon-pink);
-      box-shadow: 0 0 25px rgba(255, 45, 120, 0.7);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      text-align: center;
-      clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
-    }
-
+    /* --- SCREEN CONTAINERS --- */
     .screen {
       position: fixed;
       top: 0;
@@ -108,6 +65,7 @@
       transition: opacity 0.5s;
     }
 
+    /* Scanline overlay for cyberpunk feel */
     .screen::before {
       content: '';
       position: absolute;
@@ -115,7 +73,11 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 245, 255, 0.015) 2px, rgba(0, 245, 255, 0.015) 4px);
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 245, 255, 0.015) 2px,
+          rgba(0, 245, 255, 0.015) 4px);
       pointer-events: none;
       z-index: 0;
     }
@@ -138,6 +100,7 @@
       clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
     }
 
+    /* Corner accents */
     .content-box::before {
       content: '';
       position: absolute;
@@ -162,6 +125,7 @@
       border-radius: 0 0 0 4px;
     }
 
+    /* --- TEXT STYLES --- */
     .game-title {
       font-family: 'Orbitron', 'Segoe UI', sans-serif;
       font-size: clamp(1.6rem, 4vw, 3.2rem);
@@ -210,6 +174,7 @@
       color: var(--neon-cyan);
     }
 
+    /* --- INPUT & BUTTONS --- */
     .input-group {
       margin: 1.2rem 0;
       width: 100%;
@@ -269,6 +234,7 @@
       color: #fff;
     }
 
+    /* --- CONTROL BUTTONS (TOP RIGHT) --- */
     .top-controls {
       position: absolute;
       top: 20px;
@@ -320,6 +286,7 @@
       }
     }
 
+    /* --- HUD (IN GAME) --- */
     #hud {
       flex: 0 0 auto;
       background: linear-gradient(90deg, rgba(2, 8, 23, 0.75) 0%, rgba(0, 15, 40, 0.75) 100%);
@@ -405,6 +372,7 @@
       font-family: 'Orbitron', sans-serif;
     }
 
+    /* --- ARENA --- */
     #arena {
       flex: 1;
       display: flex;
@@ -454,6 +422,7 @@
       align-content: center;
     }
 
+    /* --- CARDS --- */
     .card {
       width: clamp(90px, 14vw, 160px);
       height: clamp(140px, 21vw, 240px);
@@ -588,6 +557,7 @@
       display: none;
     }
 
+    /* --- ACTION BAR --- */
     #action-bar {
       flex: 0 0 auto;
       min-height: 10vh;
@@ -663,6 +633,7 @@
       opacity: 0.85;
     }
 
+    /* --- MODALS --- */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -742,22 +713,6 @@
       color: #ddf0ff;
     }
 
-    /* Info penalti di soal */
-    .penalty-info-bar {
-      background: rgba(255, 45, 120, 0.1);
-      border: 1px solid rgba(255, 45, 120, 0.4);
-      border-radius: 4px;
-      padding: 7px 14px;
-      margin-bottom: 14px;
-      font-size: clamp(0.75rem, 1.5vw, 0.9rem);
-      font-family: 'Orbitron', sans-serif;
-      letter-spacing: 1px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
     .answers-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -800,6 +755,7 @@
       box-shadow: 0 0 15px rgba(255, 45, 120, 0.3);
     }
 
+    /* Recap */
     .recap-container {
       max-height: 300px;
       overflow-y: auto;
@@ -831,6 +787,7 @@
       margin-left: 10px;
     }
 
+    /* Animations */
     @keyframes popIn {
       0% {
         transform: scale(0);
@@ -882,6 +839,19 @@
       }
     }
 
+    /* Neon glow pulse for borders */
+    @keyframes borderGlow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 8px rgba(0, 245, 255, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.6);
+      }
+    }
+
     #notification {
       position: fixed;
       top: 20%;
@@ -905,6 +875,7 @@
       clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
     }
 
+    /* --- MOBILE LAYOUT FIX --- */
     @media (max-width: 768px) {
       body {
         height: 100dvh;
@@ -980,35 +951,30 @@
       .answers-grid {
         grid-template-columns: 1fr;
       }
-
-      .penalty-info-bar {
-        gap: 10px;
-        font-size: 0.72rem;
-      }
     }
   </style>
 </head>
 
 <body>
 
+  <!-- AUDIO -->
   <audio id="bgm" loop></audio>
+  <!-- SFX -->
   <audio id="sfx-correct"></audio>
   <audio id="sfx-wrong"></audio>
   <audio id="sfx-buy"></audio>
   <audio id="sfx-levelup"></audio>
 
-  <!-- Floating penalty badge -->
-  <div id="penalty-badge">❌ Jawaban Salah!</div>
-
+  <!-- GLOBAL CONTROLS (Always visible) -->
   <div class="top-controls">
     <button class="control-btn" id="music-btn" onclick="toggleMusic()" title="Musik">🔇</button>
     <button class="control-btn" id="fullscreen-btn" onclick="toggleFullscreen()" title="Layar Penuh">⛶</button>
   </div>
 
-  <!-- 1. INTRO SCREEN -->
+  <!-- 1. INTRO SCREEN (Halaman Awal) -->
   <div id="intro-screen" class="screen">
     <div class="content-box">
-      <img id="intro-logo-img" src="" alt="Logo BugSlayer Academy" class="intro-logo">
+      <img id="intro-logo-img" src="" alt="Logo Code Quest" class="intro-logo">
       <div class="game-title">BUGSLAYER ACADEMY</div>
       <p class="narrative-text" style="color:#ffd700; font-weight:700; font-size:clamp(0.8rem,1.5vw,1rem);">
         ⚔️ Algoritma &amp; Pemrograman · <span style="color:#4facfe;">SMATIQ</span>
@@ -1018,14 +984,18 @@
         Sistem komputer di seluruh sekolah mulai lumpuh satu per satu."
       </p>
       <p class="narrative-text">
-        "Sebagai Siswa Developer Terpilih, tugasmu adalah merekrut Guru-Guru Ahli,
+        "Sebagai Developer Terpilih, tugasmu adalah merekrut Guru Ahli,
         menyusun algoritma yang tepat, dan mengalahkan Bug Boss di level terakhir!"
       </p>
+
       <button class="action-btn" onclick="goToTP()">LANJUT ➡</button>
+
       <div class="info-text">
         Created by <strong>Archie Dylan Ramadhan, S.Kom</strong> | SMAIT ISTIQAMAH | Kontak:
         0812-2378-1777 | Email: <a href="mailto:archie.dylan4@guru.sma.belajar.id"
-          style="color:#4facfe; text-decoration:underline;">archie.dylan4@guru.sma.belajar.id</a>
+          style="color:#4facfe; text-decoration:underline;">
+          archie.dylan4@guru.sma.belajar.id
+        </a>
       </div>
     </div>
   </div>
@@ -1038,28 +1008,31 @@
         style="color:#4facfe; font-weight:700; font-size:clamp(0.75rem,1.5vw,0.9rem); margin-bottom:1rem; text-transform:uppercase; letter-spacing:1px;">
         SMATIQ — Algoritma &amp; Pemrograman</p>
 
+      <!-- Kartu-kartu TP -->
       <div style="width:100%; display:flex; flex-direction:column; gap:10px; margin-bottom:1rem;">
+        <!-- TP 1 -->
         <div
           style="background:rgba(255,215,0,0.07); border:2px solid rgba(255,215,0,0.4); border-radius:14px; padding:0.8rem 1rem; text-align:left; cursor:pointer;"
           onclick="toggleTPCard('tp-card-1')">
           <div style="display:flex; align-items:center; justify-content:space-between;">
-            <span style="color:#ffd700; font-weight:800; font-size:clamp(0.9rem,1.8vw,1.05rem);">🧠 Berkesadaran
-              (Mindful)</span>
+            <span style="color:#ffd700; font-weight:800; font-size:clamp(0.9rem,1.8vw,1.05rem);">🧠
+              Berkesadaran (Mindful)</span>
             <span id="tp-card-1-icon" style="color:#ffd700; font-size:1.2rem;">＋</span>
           </div>
           <div id="tp-card-1"
             style="display:none; margin-top:0.7rem; color:#e0e0e0; font-size:clamp(0.8rem,1.6vw,0.95rem); line-height:1.6;">
-            Peserta didik mampu <strong style="color:#ffd700">memahami proses berpikir</strong> dalam menyusun algoritma
-            dan menulis program, serta <strong style="color:#ffd700">merefleksikan kesalahan</strong> yang ditemukan
-            untuk memperbaiki solusi.<br><br>
+            Peserta didik mampu <strong style="color:#ffd700">memahami proses berpikir</strong> dalam
+            menyusun algoritma dan menulis program, serta <strong style="color:#ffd700">merefleksikan
+              kesalahan</strong> yang ditemukan untuk memperbaiki solusi.<br><br>
             Dalam game ini kamu dilatih:<br>
             • Menyusun strategi sebelum menyerang Bug<br>
-            • Merefleksikan pilihan Guru yang paling efektif<br>
-            • Belajar dari setiap jawaban yang salah (jawaban salah = koin berkurang!)<br><br>
-            <span style="color:#ffd700; font-size:0.9em;">💡 Perhatikan jawaban yang benar saat koin kamu berkurang —
-              itulah berpikir reflektif!</span>
+            • Merefleksikan pilihan hero yang paling efektif<br>
+            • Belajar dari setiap jawaban yang salah<br><br>
+            <span style="color:#ffd700; font-size:0.9em;">💡 Saat menjawab soal dan jawabanmu salah,
+              perhatikan jawaban yang benar — itulah berpikir reflektif!</span>
           </div>
         </div>
+        <!-- TP 2 -->
         <div
           style="background:rgba(79,172,254,0.07); border:2px solid rgba(79,172,254,0.4); border-radius:14px; padding:0.8rem 1rem; text-align:left; cursor:pointer;"
           onclick="toggleTPCard('tp-card-2')">
@@ -1070,36 +1043,37 @@
           </div>
           <div id="tp-card-2"
             style="display:none; margin-top:0.7rem; color:#e0e0e0; font-size:clamp(0.8rem,1.6vw,0.95rem); line-height:1.6;">
-            Peserta didik mampu <strong style="color:#4facfe">menghubungkan konsep algoritma dan pemrograman</strong>
-            dengan permasalahan nyata serta <strong style="color:#4facfe">menerapkannya untuk menghasilkan
-              solusi</strong> yang relevan.<br><br>
+            Peserta didik mampu <strong style="color:#4facfe">menghubungkan konsep algoritma dan
+              pemrograman</strong> dengan permasalahan nyata serta <strong style="color:#4facfe">menerapkannya untuk
+              menghasilkan solusi</strong> yang relevan.<br><br>
             Dalam game ini kamu dilatih:<br>
             • Memahami bahwa algoritma adalah solusi masalah nyata<br>
-            • Menghubungkan konsep variabel, loop, dan fungsi ke kehidupan<br>
+            • Menghubungkan konsep variabel, loop, dan fungsi ke kehidupan sehari-hari<br>
             • Melihat pemrograman sebagai alat membangun sesuatu yang berguna<br><br>
-            <span style="color:#4facfe; font-size:0.9em;">💡 Bug Syntax Error di Level 1 merepresentasikan masalah nyata
-              programmer pemula!</span>
+            <span style="color:#4facfe; font-size:0.9em;">💡 Bug Syntax Error di Level 1 merepresentasikan
+              masalah nyata programmer pemula!</span>
           </div>
         </div>
+        <!-- TP 3 -->
         <div
           style="background:rgba(46,204,113,0.07); border:2px solid rgba(46,204,113,0.4); border-radius:14px; padding:0.8rem 1rem; text-align:left; cursor:pointer;"
           onclick="toggleTPCard('tp-card-3')">
           <div style="display:flex; align-items:center; justify-content:space-between;">
-            <span style="color:#2ecc71; font-weight:800; font-size:clamp(0.9rem,1.8vw,1.05rem);">🎉 Menggembirakan
-              (Joyful)</span>
+            <span style="color:#2ecc71; font-weight:800; font-size:clamp(0.9rem,1.8vw,1.05rem);">🎉
+              Menggembirakan (Joyful)</span>
             <span id="tp-card-3-icon" style="color:#2ecc71; font-size:1.2rem;">＋</span>
           </div>
           <div id="tp-card-3"
             style="display:none; margin-top:0.7rem; color:#e0e0e0; font-size:clamp(0.8rem,1.6vw,0.95rem); line-height:1.6;">
-            Peserta didik mampu <strong style="color:#2ecc71">mengeksplorasi berbagai cara penyelesaian masalah</strong>
-            melalui aktivitas pemrograman yang <strong style="color:#2ecc71">menarik, menantang, dan mendorong
-              kreativitas</strong>.<br><br>
+            Peserta didik mampu <strong style="color:#2ecc71">mengeksplorasi berbagai cara penyelesaian
+              masalah</strong> melalui aktivitas pemrograman yang <strong style="color:#2ecc71">menarik,
+              menantang, dan mendorong kreativitas</strong>.<br><br>
             Dalam game ini kamu dilatih:<br>
-            • Menyusun kombinasi tim Guru yang berbeda secara kreatif<br>
+            • Menyusun kombinasi tim hero yang berbeda secara kreatif<br>
             • Menghadapi tantangan Bug yang semakin sulit di setiap level<br>
-            • Merasakan kesenangan belajar lewat mekanisme game<br><br>
-            <span style="color:#2ecc71; font-size:0.9em;">💡 Ada banyak kombinasi tim Guru — coba eksplorasi strategi
-              berbeda setiap main!</span>
+            • Merasakan kesenangan belajar lewat mekanisme game yang seru<br><br>
+            <span style="color:#2ecc71; font-size:0.9em;">💡 Ada banyak kombinasi tim hero — coba eksplorasi
+              strategi berbeda setiap main!</span>
           </div>
         </div>
       </div>
@@ -1108,7 +1082,7 @@
     </div>
   </div>
 
-  <!-- 3. TUTORIAL / CARA BERMAIN -->
+  <!-- 3. TUTORIAL / CARA BERMAIN SCREEN -->
   <div id="tutorial-screen" class="screen" style="display: none; opacity: 0;">
     <div class="content-box">
       <div class="game-title" style="font-size:clamp(1.5rem,3vw,2rem);">⚔️ CARA BERMAIN</div>
@@ -1119,23 +1093,21 @@
         <input type="text" id="player-name-input" placeholder="Masukkan Nama Developer..." autocomplete="off">
       </div>
       <ul class="tutorial-list">
-        <li>📝 <strong>Kerjakan Soal:</strong> Jawab soal Algoritma &amp; Pemrograman untuk mendapatkan koin debug.</li>
-        <li>⚠️ <strong>Penalti Jawaban Salah (berjenjang):</strong>
-          <span style="color:var(--neon-green);">Mudah: -3 koin</span> |
-          <span style="color:var(--neon-orange);">Sedang: -5 koin</span> |
-          <span style="color:var(--neon-pink);">Sulit: -8 koin</span>
-        </li>
-        <li>🏫 <strong>Rekrut Guru:</strong> Gunakan koin untuk merekrut Guru Ahli. Makin tinggi tier, makin kuat!</li>
+        <li>📝 <strong>Kerjakan Soal:</strong> Jawab soal Algoritma &amp; Pemrograman untuk mendapatkan koin
+          debug.</li>
+        <li>🛒 <strong>Rekrut Guru:</strong> Gunakan koin untuk merekrut Guru Ahli. Makin tinggi tier,
+          makin kuat!</li>
         <li>⚔️ <strong>Susun Tim:</strong> Kamu bisa membawa maksimal <strong>5 Guru</strong> sekaligus.</li>
-        <li>🗑️ <strong>Pecat Guru:</strong> Jika tim penuh atau ingin ganti strategi, pecat guru lama dengan menekan
-          ikon sampah di kartu.</li>
-        <li>🐛 <strong>Serang Bug:</strong> Pastikan Total Power Tim kamu lebih besar dari Bug Power untuk menang.</li>
+        <li>🗑️ <strong>Hapus Guru:</strong> Jika tim penuh atau ingin ganti strategi, hapus guru lama dengan
+          menekan ikon sampah di kartu.</li>
+        <li>🐛 <strong>Serang Bug:</strong> Pastikan Total Power Tim kamu lebih besar dari Bug Power untuk
+          menang.</li>
       </ul>
       <button class="action-btn" onclick="startGame()">MULAI CODING! 🚀</button>
     </div>
   </div>
 
-  <!-- GAMEPLAY: HUD -->
+  <!-- 3. GAMEPLAY SCREEN (HUD, ARENA, ACTION) -->
   <div id="hud">
     <div class="hud-left">
       <button class="control-btn" onclick="goHome()" title="Beranda"
@@ -1149,10 +1121,11 @@
       </div>
     </div>
     <div class="stat-group">
-      <div class="stat-box"><span>🛡️ Lvl:</span><span id="level-display" style="color:var(--neon-cyan);">1</span></div>
+      <div class="stat-box"><span>🛡️ Lvl:</span><span id="level-display" style="color:var(--neon-cyan);">1</span>
+      </div>
       <div class="stat-box"><span>🪙 Koin:</span><span id="money-display" style="color:var(--neon-green);">0</span>
       </div>
-      <div class="stat-box"><span>🏫 Guru:</span><span id="player-power-display"
+      <div class="stat-box"><span>💻 Hero:</span><span id="player-power-display"
           style="color:var(--neon-purple);">0</span></div>
       <div class="stat-box"><span>🐛 Bug:</span><span id="monster-power-display"
           style="color:var(--neon-pink);">690</span></div>
@@ -1160,17 +1133,17 @@
     <div class="hud-right"></div>
   </div>
 
-  <!-- ARENA -->
   <div id="arena">
     <div id="hero-zone">
-      <div class="zone-title" style="color:var(--neon-cyan);">Tim Guru (Max 5)</div>
+      <div class="zone-title" style="color:var(--neon-cyan);">Tim Hero (Max 5)</div>
       <div class="card-container" id="my-heroes">
         <div style="opacity: 0.7; font-style: italic; color: #ddd; font-size: 1.2rem; margin-top: 50px;">
-          Belum ada Guru yang direkrut.
+          Belum ada hero programmer.
         </div>
       </div>
       <div id="buff-indicator"
         style="margin-top:10px; color: #ffd700; font-weight:bold; display:none; font-size: 1rem; text-shadow: 0 0 5px gold;">
+        <!-- Akan diisi otomatis oleh JS -->
       </div>
     </div>
     <div id="monster-zone">
@@ -1179,10 +1152,9 @@
     </div>
   </div>
 
-  <!-- ACTION BAR -->
   <div id="action-bar">
     <button class="btn btn-blue" onclick="openQuestion()">📝 Kerjakan Soal</button>
-    <button class="btn btn-green" onclick="openShop()">🏫 Rekrut Guru</button>
+    <button class="btn btn-green" onclick="openShop()">🛒 Rekrut Hero</button>
     <button class="btn btn-red" onclick="attackMonster()">🐛 Debug!</button>
   </div>
 
@@ -1192,10 +1164,6 @@
   <div class="modal-overlay" id="question-modal">
     <div class="modal-content">
       <div class="modal-header" id="q-category">Kategori</div>
-      <div class="penalty-info-bar" id="q-penalty-info">
-        <span style="color:var(--neon-green);">✅ Benar: +0 koin</span>
-        <span style="color:var(--neon-pink);">❌ Salah: -0 koin</span>
-      </div>
       <div class="question-text" id="q-text">Isi pertanyaan...</div>
       <div class="answers-grid" id="q-options"></div>
       <button class="btn btn-red" style="margin-top: 20px;" onclick="closeModal('question-modal')">Batal</button>
@@ -1204,8 +1172,8 @@
 
   <div class="modal-overlay" id="shop-modal">
     <div class="modal-content">
-      <div class="modal-header">🏫 Rekrut Guru Ahli</div>
-      <p>Pilih Guru untuk bergabung ke tim debug kamu! (Maks 5 Slot)</p>
+      <div class="modal-header">Rekrut Hero Programmer</div>
+      <p>Pilih hero untuk tim coding kamu! (Maks 5 Slot)</p>
       <div id="shop-container"></div>
       <button class="btn btn-red" style="margin-top: 20px;" onclick="closeModal('shop-modal')">Tutup</button>
     </div>
@@ -1215,16 +1183,18 @@
     <div class="modal-content">
       <div class="modal-header" id="result-title">Hasil</div>
       <div class="question-text" id="result-message">Pesan...</div>
+
       <div id="final-recap-area" style="display: none;">
         <h3>Rekapan Jawaban Benar:</h3>
         <div class="recap-container" id="recap-list"></div>
-        <div style="margin-top: 20px;"><button class="btn btn-green" onclick="location.reload()">🔄 Main Lagi</button>
-        </div>
+        <div style="margin-top: 20px;"><button class="btn btn-green" onclick="location.reload()">🔄 Main
+            Lagi</button></div>
       </div>
+
       <div id="normal-nav-buttons">
         <button class="btn btn-green" onclick="location.reload()" id="btn-restart">Main Ulang</button>
-        <button class="btn btn-blue" onclick="closeModal('result-modal')" id="btn-next-level">Lanjut Level Berikutnya
-          ➡</button>
+        <button class="btn btn-blue" onclick="closeModal('result-modal')" id="btn-next-level">Lanjut Level
+          Berikutnya ➡</button>
       </div>
     </div>
   </div>
@@ -1245,14 +1215,14 @@
 
   <div class="modal-overlay" id="discard-confirm-modal">
     <div class="modal-content" style="max-width:400px;">
-      <div class="modal-header" style="color:var(--neon-pink);">⚠ Pecat Guru?</div>
+      <div class="modal-header" style="color:var(--neon-pink);">⚠ Buang Pahlawan?</div>
       <div class="question-text">
-        Apakah Anda yakin ingin memecat Guru ini dari tim?<br>
-        <span style="font-size:0.9rem;color:rgba(0,245,255,0.5);">Guru akan dihapus dari tim Anda secara
+        Apakah Anda yakin ingin membuang pahlawan ini?<br>
+        <span style="font-size:0.9rem;color:rgba(0,245,255,0.5);">Pahlawan akan dihapus dari tim Anda secara
           permanen.</span>
       </div>
       <div style="display:flex;justify-content:center;gap:15px;margin-top:20px;">
-        <button class="btn btn-red" onclick="executeDiscard()">Ya, Pecat</button>
+        <button class="btn btn-red" onclick="executeDiscard()">Ya, Buang</button>
         <button class="btn btn-blue" onclick="closeModal('discard-confirm-modal')">Batal</button>
       </div>
     </div>
@@ -1260,71 +1230,68 @@
 
   <script>
     // ============================================================
-    // 🎨 KONFIGURASI ASET
+    // 🎨 KONFIGURASI ASET — Edit semua link di sini dengan mudah!
     // ============================================================
     const ASSETS = {
-      background: "asset/latar.png",
-      logo: "asset/logo.png",
-      avatar: "asset/logo.png",
-      bgm: "asset/latar.mp3",
-      sfxCorrect: "asset/correct.mp3",
-      sfxWrong: "asset/wrong.mp3",
-      sfxBuy: "asset/buy.mp3",
-      sfxLevelup: "asset/levelup.mp3",
+      // --- Gambar Latar & UI ---
+      background: "asset/latar.png",  // Background arena/game
+      logo: "asset/logo.png",  // Logo di halaman intro
+      avatar: "asset/logo.png",  // Avatar profil pemain di HUD
+
+      // --- Audio ---
+      bgm: "asset/latar.mp3",  // Musik latar yang diputar terus menerus
+      sfxCorrect: "asset/correct.mp3",  // Suara saat menjawab benar
+      sfxWrong: "asset/wrong.mp3",  // Suara saat menjawab salah
+      sfxBuy: "asset/buy.mp3",  // Suara saat membeli/rekrut hero
+      sfxLevelup: "asset/levelup.mp3",  // Suara saat naik level atau menang melawan monster
+
+      // --- Gambar Hero (urutan sesuai id di HERO_DB) ---
       heroes: {
-        1: "hero/dimas.png",
-        2: "hero/zubair.png",
-        3: "hero/yahya.png",
-        4: "hero/archie.png",
-        5: "hero/eko.png",
-        6: "hero/zulian_nabila.png",
-        7: "hero/habibah.png",
-        8: "hero/nila_holidah.png",
-        9: "hero/zahro.png",
-        10: "hero/riska.png",
-        11: "hero/nita_ainun_balqis.png",
-        12: "hero/munzir.png",
+        1: "hero/dimas.png",  // dimas
+        2: "hero/zubair.png",  // zubir
+        3: "hero/yahya.png",  // yahya
+        4: "hero/archie.png",  // archie
+        5: "hero/eko.png",  // Ustadz Eko
+        6: "hero/zulian_nabila.png",  // Ustadzah Zulian &Nabila
+        7: "hero/habibah.png",  // Ustadzah Habibah
+        8: "hero/nila_holidah.png",  // Ustadzah Nila & Holidah
+        9: "hero/zahro.png",  // Ustadz Munzir
+        10: "hero/riska.png",  // Ustadzah Riska
+        11: "hero/nita_ainun_balqis.png",  // Ustadzah Nita Ainun Balqis
+        12: "hero/munzir.png",  // Ustadz Munzir
         13: "hero/marwa.png",
         14: "hero/fiyya.png",
       },
+
+      // --- Gambar Monster (urutan sesuai level di MONSTER_LEVELS) ---
       monsters: {
-        1: "monster/monster1.png",
-        2: "monster/monster2.png",
-        3: "monster/monster3.png",
-        4: "monster/monster4.png",
-        5: "monster/monster5.png",
+        1: "monster/monster1.png",  // Level 1 – Iblis Karang
+        2: "monster/monster2.png",  // Level 2 – Lidah Api Gurun
+        3: "monster/monster3.png",  // Level 3 – Beruang Batu
+        4: "monster/monster4.png",  // Level 4 – Golem Robo
+        5: "monster/monster5.png",  // Level 5 – Jenderal Naga Hitam
       }
     };
 
+    // --- Terapkan ASSETS ke elemen HTML & CSS ---
     (function applyAssets() {
+      // CSS variables untuk gambar yang dipakai di CSS
       document.documentElement.style.setProperty('--bg-image', `url('${ASSETS.background}')`);
       document.documentElement.style.setProperty('--avatar-image', `url('${ASSETS.avatar}')`);
+
+      // Logo intro
       document.getElementById('intro-logo-img').src = ASSETS.logo;
+
+      // Audio
       document.getElementById('bgm').src = ASSETS.bgm;
       document.getElementById('sfx-correct').src = ASSETS.sfxCorrect;
       document.getElementById('sfx-wrong').src = ASSETS.sfxWrong;
       document.getElementById('sfx-buy').src = ASSETS.sfxBuy;
       document.getElementById('sfx-levelup').src = ASSETS.sfxLevelup;
     })();
+    // ============================================================
 
-    // ============================================================
-    // ⚠️ KONFIGURASI PENALTI & HADIAH (mudah diubah)
-    // ============================================================
-    const PENALTY = {
-      easy: 3,   // koin dikurangi jika jawaban salah di level mudah
-      medium: 5,   // koin dikurangi jika jawaban salah di level sedang
-      hard: 8    // koin dikurangi jika jawaban salah di level sulit
-    };
-
-    const REWARD_BASE = {
-      easy: 5,
-      medium: 7.5,
-      hard: 10
-    };
-
-    // ============================================================
-    // NAVIGASI LAYAR
-    // ============================================================
+    // --- SCREEN NAVIGATION ---
     function goHome() {
       document.getElementById('home-confirm-modal').style.display = 'flex';
     }
@@ -1343,7 +1310,8 @@
 
     function toggleTPCard(id) {
       const card = document.getElementById(id);
-      const icon = document.getElementById(id + '-icon');
+      const iconId = id + '-icon';
+      const icon = document.getElementById(iconId);
       if (card.style.display === 'none') {
         card.style.display = 'block';
         icon.innerText = '－';
@@ -1354,6 +1322,7 @@
     }
 
     function goToTutorial() {
+      // Transition from TP screen to Tutorial screen
       const tp = document.getElementById('tp-screen');
       tp.style.opacity = '0';
       setTimeout(() => {
@@ -1365,35 +1334,34 @@
       }, 500);
     }
 
-    // ============================================================
-    // DATABASE GURU (sebelumnya: HERO_DB)
-    // Tier: "common" = Guru Junior | "rare" = Guru Senior | "legend" = Guru Legendaris
-    // ============================================================
+    // --- DATABASE HERO (DIPERBARUI) ---
     const HERO_DB = [
-      // GURU JUNIOR (common)
+      // COMMON
       { id: 1, name: "Mr. Dims", tier: "common", power: 270, price: 20, imgUrl: ASSETS.heroes[1] },
       { id: 2, name: "Ustadz Zubair", tier: "common", power: 170, price: 15, imgUrl: ASSETS.heroes[2] },
       { id: 3, name: "Coach Yahya", tier: "common", power: 240, price: 17, imgUrl: ASSETS.heroes[3] },
       { id: 4, name: "Ustadz Archie", tier: "common", power: 250, price: 19, imgUrl: ASSETS.heroes[4] },
       { id: 5, name: "Ustadz Eko", tier: "common", power: 300, price: 24, imgUrl: ASSETS.heroes[5] },
-      // GURU SENIOR (rare)
+
+      // RARE
       { id: 6, name: "Ustadzah Zulian & Nabila", tier: "rare", power: 400, price: 50, imgUrl: ASSETS.heroes[6] },
       { id: 7, name: "Ustadzah Habibah", tier: "rare", power: 330, price: 33, imgUrl: ASSETS.heroes[7] },
       { id: 8, name: "Ustadzah Nila & Holidah", tier: "rare", power: 450, price: 60, imgUrl: ASSETS.heroes[8] },
       { id: 9, name: "Ustadzah Zahro", tier: "rare", power: 350, price: 37, imgUrl: ASSETS.heroes[9] },
       { id: 13, name: "Ustadzah Marwa", tier: "rare", power: 420, price: 55, imgUrl: ASSETS.heroes[13] },
       { id: 14, name: "Ustadzah Fiyya", tier: "rare", power: 500, price: 80, imgUrl: ASSETS.heroes[14] },
-      // GURU LEGENDARIS (legend)
+
+      // LEGEND
       { id: 10, name: "Ustadzah Riska", tier: "legend", power: 550, price: 120, effect: "+30 All Power", imgUrl: ASSETS.heroes[10] },
       { id: 11, name: "Ustadzah Nita", tier: "legend", power: 550, price: 120, effect: "-30 Power Bug", imgUrl: ASSETS.heroes[11] },
       { id: 12, name: "Syekh Munzir", tier: "legend", power: 550, price: 120, effect: "+10 All Power", imgUrl: ASSETS.heroes[12] }
     ];
 
-    // ============================================================
-    // DATABASE SOAL
-    // ============================================================
+    // --- DATABASE SOAL ALGORITMA & PEMROGRAMAN ---
     const QUESTION_DB = [
-      // MUDAH (Level 1)
+      // ==========================================
+      // TINGKAT MUDAH (LEVEL 1)
+      // ==========================================
       { difficulty: "easy", category: "KONSEP DASAR", text: "Urutan langkah-langkah logis untuk menyelesaikan suatu masalah disebut ....", correct: "Algoritma", options: ["Program", "Algoritma", "Variabel", "Fungsi"] },
       { difficulty: "easy", category: "KONSEP DASAR", text: "Representasi algoritma menggunakan simbol-simbol gambar disebut ....", correct: "Flowchart", options: ["Pseudocode", "Flowchart", "Kode program", "Diagram ER"] },
       { difficulty: "easy", category: "KONSEP DASAR", text: "Simbol flowchart berbentuk persegi panjang digunakan untuk ....", correct: "Proses", options: ["Keputusan", "Proses", "Input/Output", "Mulai/Selesai"] },
@@ -1415,7 +1383,10 @@
       { difficulty: "easy", category: "SCRATCH / VISUAL", text: "Blok 'repeat 10' di Scratch termasuk struktur ....", correct: "Pengulangan (loop)", options: ["Percabangan", "Input", "Pengulangan (loop)", "Output"] },
       { difficulty: "easy", category: "SCRATCH / VISUAL", text: "Untuk membuat karakter bergerak di Scratch, blok yang digunakan adalah ....", correct: "Move ... steps", options: ["Say ...", "Move ... steps", "Wait ...", "Play sound"] },
       { difficulty: "easy", category: "SCRATCH / VISUAL", text: "Blok 'if ... then' di Scratch termasuk struktur ....", correct: "Percabangan", options: ["Pengulangan", "Percabangan", "Variabel", "Input"] },
-      // SEDANG (Level 2 & 3)
+
+      // ==========================================
+      // TINGKAT SEDANG (LEVEL 2 & 3)
+      // ==========================================
       { difficulty: "medium", category: "ALGORITMA", text: "Perhatikan flowchart: A=5, B=3, C = A+B. Nilai C adalah ....", correct: "8", options: ["2", "8", "15", "53"] },
       { difficulty: "medium", category: "ALGORITMA", text: "Struktur percabangan IF-ELSE digunakan jika ....", correct: "Ada dua kemungkinan kondisi", options: ["Hanya satu kondisi", "Ada dua kemungkinan kondisi", "Perlu pengulangan", "Tidak ada kondisi"] },
       { difficulty: "medium", category: "ALGORITMA", text: "Loop FOR biasanya digunakan ketika jumlah pengulangan sudah ....", correct: "Diketahui", options: ["Tidak diketahui", "Diketahui", "Tak terbatas", "Bergantung input user"] },
@@ -1436,7 +1407,10 @@
       { difficulty: "medium", category: "INTERNET & TEKNOLOGI", text: "Tag HTML yang digunakan untuk membuat judul terbesar adalah ....", correct: "<h1>", options: ["<title>", "<h1>", "<header>", "<big>"] },
       { difficulty: "medium", category: "INTERNET & TEKNOLOGI", text: "CSS digunakan dalam pembuatan website untuk ....", correct: "Mengatur tampilan/style halaman", options: ["Menyimpan data", "Mengatur tampilan/style halaman", "Menjalankan logika", "Mengatur database"] },
       { difficulty: "medium", category: "INTERNET & TEKNOLOGI", text: "JavaScript pada website berfungsi untuk ....", correct: "Menambahkan interaktivitas", options: ["Mengatur warna", "Menyimpan file", "Menambahkan interaktivitas", "Membuat gambar"] },
-      // SULIT (Level 4 & 5)
+
+      // ==========================================
+      // TINGKAT SULIT (LEVEL 4 & 5)
+      // ==========================================
       { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Binary Search bekerja pada data yang sudah ....", correct: "Terurut (sorted)", options: ["Acak", "Terurut (sorted)", "Bertipe integer", "Berukuran kecil"] },
       { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Algoritma yang memanggil dirinya sendiri disebut ....", correct: "Rekursi", options: ["Iterasi", "Rekursi", "Greedy", "Dynamic Programming"] },
       { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Struktur data LIFO (Last In First Out) dimiliki oleh ....", correct: "Stack", options: ["Queue", "Stack", "Array", "Graph"] },
@@ -1464,9 +1438,7 @@
       { level: 5, power: 2150, name: "Virus Root Boss", imgUrl: ASSETS.monsters[5] }
     ];
 
-    // ============================================================
-    // STATE PERMAINAN
-    // ============================================================
+    // --- STATE ---
     let state = {
       playerName: "Developer",
       money: 0,
@@ -1474,27 +1446,27 @@
       myHeroes: [],
       monsterPower: 690,
       correctAnswersLog: [],
-      askedQuestions: []
+      askedQuestions: [] // Menyimpan soal yang sudah pernah ditanyakan
     };
 
-    // ============================================================
-    // MULAI GAME
-    // ============================================================
+    // --- START GAME LOGIC ---
     function startGame() {
       const nameInput = document.getElementById('player-name-input').value;
       if (nameInput.trim() === "") {
-        alert("Mohon masukkan nama Developer terlebih dahulu!");
+        alert("Mohon masukkan nama Komandan terlebih dahulu!");
         return;
       }
       state.playerName = nameInput;
       document.getElementById('player-name-display').innerText = state.playerName;
 
+      // Hide Tutorial, Show Game
       document.getElementById('tutorial-screen').style.opacity = '0';
       setTimeout(() => {
         document.getElementById('tutorial-screen').style.display = 'none';
         document.getElementById('hud').style.display = 'flex';
         document.getElementById('arena').style.display = 'flex';
         document.getElementById('action-bar').style.display = 'flex';
+
         toggleMusic(true);
       }, 500);
 
@@ -1503,38 +1475,58 @@
 
     function initLevel(lvl) {
       const mData = MONSTER_LEVELS.find(m => m.level === lvl);
-      if (!mData) { showFinalVictory(); return; }
+      if (!mData) {
+        // TAMAT
+        showFinalVictory();
+        return;
+      }
+
       state.level = lvl;
       state.monsterPower = mData.power;
+
       updateHUD();
       renderHeroes();
       renderMonster(mData);
     }
 
-    // ============================================================
-    // HUD & BUFF
-    // ============================================================
+    // --- CORE FUNCTIONS (UPDATE HUD & BUFF LOGIC) ---
     function updateHUD() {
       document.getElementById('level-display').innerText = state.level;
       document.getElementById('money-display').innerText = "🪙 " + state.money.toLocaleString('id-ID');
 
-      let totalPower = 0;
+      let totalHeroPower = 0;
       let currentMonsterPower = state.monsterPower;
       let buffTexts = [];
 
-      let hasRiska = state.myHeroes.some(h => h.name === "Ustadzah Riska");
-      let hasNita = state.myHeroes.some(h => h.name === "Ustadzah Nita");
-      let hasMunzir = state.myHeroes.some(h => h.name === "Syekh Munzir");
+      let hasCompiler = state.myHeroes.some(h => h.name === "Arch. Compiler");
+      let hasBugSlayer = state.myHeroes.some(h => h.name === "Bug Slayer");
+      let hasAI = state.myHeroes.some(h => h.name === "AI Engineer");
 
-      state.myHeroes.forEach(h => totalPower += h.power);
+      // Menjumlahkan power dasar dari tiap hero
+      state.myHeroes.forEach(h => totalHeroPower += h.power);
 
-      if (hasRiska) { totalPower += (30 * state.myHeroes.length); buffTexts.push("⚡ Riska: +30 All"); }
-      if (hasMunzir) { totalPower += (10 * state.myHeroes.length); buffTexts.push("🤲 Munzir: +10 All"); }
-      if (hasNita) { currentMonsterPower -= 30; if (currentMonsterPower < 0) currentMonsterPower = 0; buffTexts.push("🛡️ Nita: -30 Bug"); }
+      // Kalkulasi Buff
+      if (hasCompiler) {
+        totalHeroPower += (30 * state.myHeroes.length);
+        buffTexts.push("⚡ Compiler: +30 All");
+      }
+      if (hasAI) {
+        totalHeroPower += (10 * state.myHeroes.length);
+        buffTexts.push("🤖 AI: +10 All");
+      }
+      if (hasBugSlayer) {
+        currentMonsterPower -= 30;
+        buffTexts.push("🐛 Bug Slayer: -30 Bug");
+      }
 
-      document.getElementById('player-power-display').innerText = totalPower;
+      // Pastikan power monster tidak di bawah 0
+      if (currentMonsterPower < 0) currentMonsterPower = 0;
+
+      // Update teks di layar
+      document.getElementById('player-power-display').innerText = totalHeroPower;
       document.getElementById('monster-power-display').innerText = currentMonsterPower;
 
+      // Tampilkan tulisan Buff aktif jika ada Legend di dalam tim
       const buffIndicator = document.getElementById('buff-indicator');
       if (buffTexts.length > 0) {
         buffIndicator.style.display = 'block';
@@ -1548,9 +1540,10 @@
       const container = document.getElementById('my-heroes');
       container.innerHTML = '';
       if (state.myHeroes.length === 0) {
-        container.innerHTML = '<div style="opacity: 0.7; font-style: italic; color: #ddd; font-size: 1.2rem; margin-top: 50px;">Belum ada Guru yang direkrut.</div>';
+        container.innerHTML = '<div style="opacity: 0.7; font-style: italic; color: #ddd; font-size: 1.2rem; margin-top: 50px;">Belum ada pahlawan.</div>';
         return;
       }
+      // Passing index is crucial!
       state.myHeroes.forEach((hero, index) => container.appendChild(createCard(hero, false, index)));
     }
 
@@ -1561,15 +1554,22 @@
       div.className = 'card monster-card';
       div.style.backgroundImage = `url('${mData.imgUrl}')`;
 
+      // Render ulang power dinamis berdasarkan HUD agar sinkron dengan debuff Lunar
       let displayedMonsterPower = state.monsterPower;
-      if (state.myHeroes.some(h => h.name === "Ustadzah Nita")) {
+      if (state.myHeroes.some(h => h.name === "Panglima Lunar")) {
         displayedMonsterPower -= 30;
         if (displayedMonsterPower < 0) displayedMonsterPower = 0;
       }
 
+      // div.innerHTML = `<div class="card-power">${displayedMonsterPower}</div>`;
       div.style.cursor = 'pointer';
       div.addEventListener('click', () => {
-        showCardZoom({ name: mData.name, power: displayedMonsterPower, tier: 'monster', imgUrl: mData.imgUrl });
+        showCardZoom({
+          name: mData.name,
+          power: displayedMonsterPower,
+          tier: 'monster',
+          imgUrl: mData.imgUrl
+        });
       });
       container.appendChild(div);
     }
@@ -1580,26 +1580,45 @@
       if (isShop) div.classList.add('shop-item-wrapper');
       div.style.backgroundImage = `url('${hero.imgUrl}')`;
 
+      const footerText = isShop ? `Rp ${hero.price.toLocaleString()}` : hero.tier.toUpperCase();
+      const specialText = hero.effect ? `<div class="special-effect">${hero.effect}</div>` : '';
+
+      // Konten HTML dasar kartu
+      // div.innerHTML = `
+      //     <div class="card-power">${hero.power}</div>
+      //     ${specialText}
+      //     <div class="card-price">${footerText}</div>
+      //     `;
+
+      // PENTING: Tambahkan tombol hapus secara manual sebagai elemen DOM
       if (!isShop && index !== null) {
         const deleteBtn = document.createElement('div');
         deleteBtn.className = 'discard-btn';
         deleteBtn.innerHTML = '🗑️';
-        deleteBtn.title = "Pecat Guru Ini";
+        deleteBtn.title = "Hapus Hero Ini";
+
+        // Event listener langsung
         deleteBtn.onclick = function (e) {
-          e.stopPropagation();
+          e.stopPropagation(); // Mencegah klik tembus ke kartu
           discardHero(index);
         };
+
         div.appendChild(deleteBtn);
       }
 
+      // Klik kartu untuk membeli (hanya di toko)
       if (isShop) {
         div.onclick = () => buyHero(hero);
+
         const detailBtn = document.createElement('div');
         detailBtn.className = 'discard-btn';
         detailBtn.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>';
-        detailBtn.title = "Lihat Detail Guru";
+        detailBtn.title = "Lihat Detail Hero";
         detailBtn.style.background = 'rgba(0,245,255,0.25)';
-        detailBtn.onclick = function (e) { e.stopPropagation(); showCardZoom(hero, true); };
+        detailBtn.onclick = function (e) {
+          e.stopPropagation();
+          showCardZoom(hero, true);
+        };
         div.appendChild(detailBtn);
       } else {
         div.style.cursor = 'pointer';
@@ -1612,9 +1631,7 @@
       return div;
     }
 
-    // ============================================================
-    // CARD ZOOM
-    // ============================================================
+    // --- ZOOM CARD MODAL ---
     function showCardZoom(hero, isShop = false) {
       const overlay = document.getElementById('card-zoom-overlay');
       const cardEl = document.getElementById('card-zoom-content');
@@ -1636,41 +1653,46 @@
         priceEl.style.display = 'none';
         buyBtn.style.display = 'none';
       }
+
       overlay.style.display = 'flex';
     }
-
     function closeCardZoom() {
       document.getElementById('card-zoom-overlay').style.display = 'none';
     }
 
-    // ============================================================
-    // PERTEMPURAN
-    // ============================================================
+    // --- BATTLE & PROGRESSION ---
     function attackMonster() {
-      if (state.myHeroes.length === 0) { showNotification("Rekrut Guru dulu!"); return; }
+      if (state.myHeroes.length === 0) {
+        showNotification("Rekrut pahlawan dulu!");
+        return;
+      }
 
-      let totalPower = 0;
+      let totalHeroPower = 0;
       let currentMonsterPower = state.monsterPower;
 
-      let hasRiska = state.myHeroes.some(h => h.name === "Ustadzah Riska");
-      let hasNita = state.myHeroes.some(h => h.name === "Ustadzah Nita");
-      let hasMunzir = state.myHeroes.some(h => h.name === "Syekh Munzir");
+      let hasSurya = state.myHeroes.some(h => h.name === "Panglima Surya");
+      let hasLunar = state.myHeroes.some(h => h.name === "Panglima Lunar");
+      let hasGaia = state.myHeroes.some(h => h.name === "Panglima Gaia");
 
-      state.myHeroes.forEach(h => totalPower += h.power);
-      if (hasRiska) totalPower += (30 * state.myHeroes.length);
-      if (hasMunzir) totalPower += (10 * state.myHeroes.length);
-      if (hasNita) { currentMonsterPower -= 30; if (currentMonsterPower < 0) currentMonsterPower = 0; }
+      // Kalkulasi Total Power
+      state.myHeroes.forEach(h => totalHeroPower += h.power);
+      if (hasSurya) totalHeroPower += (30 * state.myHeroes.length);
+      if (hasGaia) totalHeroPower += (10 * state.myHeroes.length);
+      if (hasLunar) {
+        currentMonsterPower -= 30;
+        if (currentMonsterPower < 0) currentMonsterPower = 0;
+      }
 
       const mZone = document.getElementById('monster-zone');
       mZone.classList.add('shake-anim');
       setTimeout(() => mZone.classList.remove('shake-anim'), 500);
 
-      if (totalPower > currentMonsterPower) {
+      if (totalHeroPower > currentMonsterPower) {
         playSound('levelup');
         showLevelUpPopup(state.level);
       } else {
         playSound('wrong');
-        showNotification("Kalah Power! Kerjakan soal & rekrut Guru lagi!");
+        showNotification("Kalah Power! Cari dana & beli hero lagi!");
       }
     }
 
@@ -1678,14 +1700,19 @@
       const modal = document.getElementById('result-modal');
       document.getElementById('result-title').innerText = `Level ${lvl} Selesai!`;
       document.getElementById('result-title').style.color = "#2ecc71";
-      document.getElementById('result-message').innerText = `Selamat Developer ${state.playerName}! Bug berhasil dikalahkan. Tim Guru-mu luar biasa — siap untuk tantangan berikutnya?`;
+      document.getElementById('result-message').innerText = `Selamat Komandan ${state.playerName}! Monster berhasil dikalahkan. Siap untuk tantangan berikutnya?`;
+
       document.getElementById('normal-nav-buttons').style.display = 'block';
       document.getElementById('final-recap-area').style.display = 'none';
       document.getElementById('btn-restart').style.display = 'none';
 
       const nextBtn = document.getElementById('btn-next-level');
       nextBtn.style.display = 'inline-block';
-      nextBtn.onclick = () => { closeModal('result-modal'); initLevel(state.level + 1); };
+      nextBtn.onclick = () => {
+        closeModal('result-modal');
+        initLevel(state.level + 1);
+      };
+
       modal.style.display = 'flex';
     }
 
@@ -1693,42 +1720,52 @@
       const modal = document.getElementById('result-modal');
       document.getElementById('result-title').innerText = "MISI SUKSES!";
       document.getElementById('result-title').style.color = "#ffd700";
-      document.getElementById('result-message').innerText = `Luar Biasa, Developer ${state.playerName}! SMATIQ telah bebas dari Bug berkat kecerdasan dan Tim Guru-mu yang luar biasa!`;
+      document.getElementById('result-message').innerText = `Luar Biasa, Komandan ${state.playerName}! Bumi telah aman berkat strategi cerdasmu.`;
+
+      // Hide normal buttons
       document.getElementById('normal-nav-buttons').style.display = 'none';
 
+      // Show Recap
       const recapArea = document.getElementById('final-recap-area');
       const recapList = document.getElementById('recap-list');
       recapList.innerHTML = '';
 
       if (state.correctAnswersLog.length > 0) {
-        state.correctAnswersLog.forEach(item => {
+        state.correctAnswersLog.forEach((item, idx) => {
           const row = document.createElement('div');
           row.className = 'recap-item';
           row.innerHTML = `
-            <div>
-              <span style="font-size:0.8rem; color:#888;">${item.cat} [${item.lvl}]</span><br>
-              <span class="recap-question">${item.q}</span>
-            </div>
-            <div class="recap-answer">✔ ${item.a}</div>
-          `;
+                        <div>
+                            <span style="font-size:0.8rem; color:#888;">${item.cat} [${item.lvl}]</span><br>
+                            <span class="recap-question">${item.q}</span>
+                        </div>
+                        <div class="recap-answer">✔ ${item.a}</div>
+                    `;
           recapList.appendChild(row);
         });
       } else {
         recapList.innerHTML = '<div style="text-align:center; color:#888;">Tidak ada catatan soal.</div>';
       }
+
       recapArea.style.display = 'block';
       modal.style.display = 'flex';
     }
 
-    // ============================================================
-    // SOAL & PENALTI BERJENJANG
-    // ============================================================
+    // --- QUIZ LOGIC (SMART DIFFICULTY) ---
     function getQuestionByDifficulty() {
       let difficulty = "easy";
+      // Kategori Mudah untuk Level 1 (Default)
+
+      // Kategori Sedang untuk Level 2 dan 3
       if (state.level === 2 || state.level === 3) difficulty = "medium";
+
+      // Kategori Sulit untuk Level 4 dan 5
       if (state.level === 4 || state.level === 5) difficulty = "hard";
 
+      // Filter soal yang belum pernah ditanyakan
       let eligible = QUESTION_DB.filter(q => q.difficulty === difficulty && !state.askedQuestions.includes(q.text));
+
+      // Jika semua soal di level ini sudah habis, reset history untuk level ini agar bisa diulang
       if (eligible.length === 0) {
         const diffQuestions = QUESTION_DB.filter(q => q.difficulty === difficulty).map(q => q.text);
         state.askedQuestions = state.askedQuestions.filter(text => !diffQuestions.includes(text));
@@ -1736,27 +1773,17 @@
       }
 
       const q = eligible[Math.floor(Math.random() * eligible.length)];
-      state.askedQuestions.push(q.text);
+      state.askedQuestions.push(q.text); // Catat soal agar tidak diulang
       return q;
     }
 
     function openQuestion() {
       const modal = document.getElementById('question-modal');
+
+      // Ambil soal unik berdasarkan Level
       const q = getQuestionByDifficulty();
-      const penalty = PENALTY[q.difficulty];
-      const reward = Math.ceil(REWARD_BASE[q.difficulty] + 1);
 
       document.getElementById('q-category').innerText = `${q.category} (${q.difficulty.toUpperCase()})`;
-
-      // Update info penalti di bar soal
-      const penaltyBar = document.getElementById('q-penalty-info');
-      const diffLabel = { easy: '🟢 Mudah', medium: '🟡 Sedang', hard: '🔴 Sulit' };
-      penaltyBar.innerHTML = `
-        <span>${diffLabel[q.difficulty]}</span>
-        <span style="color:var(--neon-green);">✅ Benar: +${reward} koin</span>
-        <span style="color:var(--neon-pink);">❌ Salah: -${penalty} koin</span>
-      `;
-
       document.getElementById('q-text').innerText = q.text;
       const opts = document.getElementById('q-options');
       opts.innerHTML = '';
@@ -1776,9 +1803,9 @@
       allBtns.forEach(b => b.disabled = true);
 
       if (selected === correct) {
-        // BENAR: beri hadiah koin
         btn.classList.add('correct');
         playSound('correct');
+        // Log correct answer
         state.correctAnswersLog.push({
           cat: questionObj.category,
           q: questionObj.text,
@@ -1787,109 +1814,107 @@
         });
 
         setTimeout(() => {
-          const reward = Math.ceil(REWARD_BASE[questionObj.difficulty] + Math.floor(Math.random() * 2));
+          // Reward varies by difficulty
+          let baseReward = 5;
+          if (questionObj.difficulty === 'medium') baseReward = 7.5;
+          if (questionObj.difficulty === 'hard') baseReward = 10;
+
+          let reward = baseReward + Math.floor(Math.random() * 2);
           state.money += reward;
-          showNotification(`✅ Benar! +${reward} koin`);
+          showNotification(`Benar! +Rp ${reward.toLocaleString()}`);
           updateHUD();
           closeModal('question-modal');
         }, 1000);
-
       } else {
-        // SALAH: terapkan penalti berjenjang
         btn.classList.add('wrong');
         playSound('wrong');
         allBtns.forEach(b => { if (b.innerText === correct) b.classList.add('correct'); });
-
-        const penalty = PENALTY[questionObj.difficulty];
-        state.money = Math.max(0, state.money - penalty);
-
-        // Tampilkan badge penalti merah
-        showPenaltyBadge(penalty, questionObj.difficulty);
-
         setTimeout(() => {
-          updateHUD();
+          showNotification("Salah!");
           closeModal('question-modal');
-        }, 1800);
+        }, 1500);
       }
     }
 
-    // Tampilkan badge merah melayang + flash latar
-    function showPenaltyBadge(penalty, difficulty) {
-      const diffLabel = { easy: 'Mudah (-3)', medium: 'Sedang (-5)', hard: 'Sulit (-8)' };
-      const badge = document.getElementById('penalty-badge');
-      badge.innerHTML = `❌ Jawaban Salah!<br><span style="font-size:0.72em; opacity:0.9;">-${penalty} koin · Tingkat ${diffLabel[difficulty].split(' ')[0]}</span>`;
-      badge.style.opacity = '1';
-
-      // Flash merah pada body
-      document.body.classList.add('penalty-flash');
-      setTimeout(() => document.body.classList.remove('penalty-flash'), 800);
-      setTimeout(() => { badge.style.opacity = '0'; }, 2000);
-    }
-
-    // ============================================================
-    // TOKO GURU
-    // ============================================================
     function openShop() {
       const modal = document.getElementById('shop-modal');
       const container = document.getElementById('shop-container');
       container.innerHTML = '';
-      HERO_DB.forEach(hero => container.appendChild(createCard(hero, true)));
+      // Display all heroes in shop
+      HERO_DB.forEach(hero => {
+        container.appendChild(createCard(hero, true));
+      });
       modal.style.display = 'flex';
     }
 
     function buyHero(hero) {
-      if (state.myHeroes.length >= 5) { showNotification("Tim Penuh! (Maks 5 Guru)"); return; }
-      if (state.money < hero.price) { showNotification("Koin Kurang!"); return; }
+      // Maksimal 5 Hero (sesuai permintaan)
+      if (state.myHeroes.length >= 5) { showNotification("Tim Penuh (Maks 5)!"); return; }
+      if (state.money < hero.price) { showNotification("Dana Kurang!"); return; }
+
       state.money -= hero.price;
+      // Add a fresh copy of the hero object
       state.myHeroes.push({ ...hero });
       updateHUD();
+
+      // Me-render ulang monster (karena jika beli pahlawan Lunar, power monster di kartu juga akan otomatis turun 30)
       const currentMonsterData = MONSTER_LEVELS.find(m => m.level === state.level);
       if (currentMonsterData) renderMonster(currentMonsterData);
+
       renderHeroes();
-      showNotification(`🏫 ${hero.name} bergabung ke tim!`);
+      showNotification(`+ ${hero.name}`);
       closeModal('shop-modal');
       playSound('buy');
     }
 
-    // ============================================================
-    // PECAT GURU
-    // ============================================================
-    let heroToDiscardIndex = null;
+    // --- DISCARD HERO FUNCTION ---
+    let heroToDiscardIndex = null; // Menyimpan index hero yang akan dihapus
 
     function discardHero(index) {
+      // Munculkan custom modal konfirmasi pembuangan hero
       heroToDiscardIndex = index;
       document.getElementById('discard-confirm-modal').style.display = 'flex';
     }
 
+    // Eksekusi fungsi ini jika pemain menekan tombol "Ya, Buang" di dalam modal
     function executeDiscard() {
       if (heroToDiscardIndex !== null) {
         const removedHero = state.myHeroes[heroToDiscardIndex];
+        // Hapus hero dari array berdasarkan index
         state.myHeroes.splice(heroToDiscardIndex, 1);
+
+        // Render ulang tampilan
         updateHUD();
+
+        // Kembalikan visual status monster di arena (jika yang dibuang adalah pahlawan Lunar)
         const currentMonsterData = MONSTER_LEVELS.find(m => m.level === state.level);
         if (currentMonsterData) renderMonster(currentMonsterData);
+
         renderHeroes();
-        showNotification(`👋 ${removedHero.name} dipecat dari tim`);
+
+        showNotification(`- ${removedHero.name} Dibuang`);
+
+        // Reset index dan tutup modal
         heroToDiscardIndex = null;
         closeModal('discard-confirm-modal');
       }
     }
 
-    // ============================================================
-    // UTILITAS
-    // ============================================================
+    // --- FULLSCREEN LOGIC ---
     function toggleFullscreen() {
       if (!document.fullscreenElement) {
         document.documentElement.requestFullscreen().catch(err => {
-          alert(`Error fullscreen: ${err.message}`);
+          alert(`Error trying to enable fullscreen mode: ${err.message} (${err.name})`);
         });
       } else {
-        if (document.exitFullscreen) document.exitFullscreen();
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
       }
     }
 
+    // --- UTILS ---
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-
     function showNotification(txt) {
       const el = document.getElementById('notification');
       el.innerText = txt;
@@ -1905,14 +1930,18 @@
         'buy': document.getElementById('sfx-buy'),
         'levelup': document.getElementById('sfx-levelup')
       };
+
       const el = sounds[type];
-      if (el) { el.currentTime = 0; el.play().catch(e => { }); }
+      if (el) {
+        el.currentTime = 0;
+        el.play().catch(e => console.log("Audio play prevented:", e));
+      }
     }
 
+    // Audio Control
     const bgm = document.getElementById('bgm');
     const musicBtn = document.getElementById('music-btn');
     let isMusicPlaying = false;
-
     function toggleMusic(forcePlay = false) {
       if (!isMusicPlaying || forcePlay) {
         bgm.play().then(() => {
@@ -1928,36 +1957,37 @@
       }
     }
 
-    // ============================================================
-    // TUJUAN PEMBELAJARAN (TP) — in-game
-    // ============================================================
+    // --- TUJUAN PEMBELAJARAN (TP) ---
     const TP_DATA = {
       mindful: {
-        icon: "🧠", title: "Berkesadaran (Mindful)",
-        body: `Peserta didik mampu <strong style="color:#ffd700">memahami proses berpikir</strong> dalam menyusun algoritma dan menulis program, serta <strong style="color:#ffd700">merefleksikan kesalahan</strong> yang ditemukan untuk memperbaiki solusi.<br><br>
-               Dalam game ini kamu dilatih:<br>
-               • Menyusun strategi sebelum menyerang Bug<br>
-               • Merefleksikan pilihan Guru yang paling efektif<br>
-               • Belajar dari setiap jawaban yang salah (koin berkurang!)`,
-        contoh: `💡 <strong>Contoh:</strong> Saat jawabanmu salah dan koin berkurang, perhatikan jawaban yang benar — itulah proses berpikir reflektif!`
+        icon: "🧠",
+        title: "Berkesadaran (Mindful)",
+        body: `Peserta didik mampu <strong style="color:#ffd700">memahami proses berpikir</strong> dalam menyusun algoritma dan menulis program, serta <strong style="color:#ffd700">merefleksikan kesalahan</strong> yang ditemukan untuk memperbaiki solusi yang dibuat.<br><br>
+                Dalam game ini, kamu dilatih untuk:<br>
+                • Menyusun strategi sebelum menyerang Bug<br>
+                • Merefleksikan pilihan hero mana yang paling efektif<br>
+                • Belajar dari setiap jawaban yang salah`,
+        contoh: `💡 <strong>Contoh Penerapan:</strong> Saat menjawab soal dan jawabanmu salah, perhatikan jawaban yang benar dan pahami mengapa itu benar — itulah proses berpikir reflektif!`
       },
       meaningful: {
-        icon: "🔗", title: "Bermakna (Meaningful)",
+        icon: "🔗",
+        title: "Bermakna (Meaningful)",
         body: `Peserta didik mampu <strong style="color:#ffd700">menghubungkan konsep algoritma dan pemrograman</strong> dengan permasalahan nyata serta <strong style="color:#ffd700">menerapkannya untuk menghasilkan solusi</strong> yang relevan dan bermanfaat.<br><br>
-               Dalam game ini kamu dilatih:<br>
-               • Memahami bahwa algoritma adalah solusi masalah nyata<br>
-               • Menghubungkan konsep variabel, loop, dan fungsi ke kehidupan<br>
-               • Melihat pemrograman sebagai alat membangun sesuatu yang berguna`,
-        contoh: `💡 <strong>Contoh:</strong> Bug Syntax Error di Level 1 merepresentasikan masalah nyata programmer pemula!`
+                Dalam game ini, kamu dilatih untuk:<br>
+                • Memahami bahwa algoritma adalah solusi untuk masalah nyata<br>
+                • Menghubungkan konsep variabel, loop, dan fungsi ke kehidupan sehari-hari<br>
+                • Melihat pemrograman sebagai alat untuk membangun sesuatu yang berguna`,
+        contoh: `💡 <strong>Contoh Penerapan:</strong> Bug Syntax Error di Level 1 merepresentasikan masalah nyata programmer pemula — kamu belajar cara "debug" lewat soal-soal yang relevan!`
       },
       joyful: {
-        icon: "🎉", title: "Menggembirakan (Joyful)",
+        icon: "🎉",
+        title: "Menggembirakan (Joyful)",
         body: `Peserta didik mampu <strong style="color:#ffd700">mengeksplorasi berbagai cara penyelesaian masalah</strong> melalui aktivitas pemrograman yang <strong style="color:#ffd700">menarik, menantang, dan mendorong kreativitas</strong>.<br><br>
-               Dalam game ini kamu dilatih:<br>
-               • Menyusun kombinasi tim Guru yang berbeda secara kreatif<br>
-               • Menghadapi tantangan Bug yang semakin sulit di setiap level<br>
-               • Merasakan kesenangan belajar lewat mekanisme game`,
-        contoh: `💡 <strong>Contoh:</strong> Ada banyak kombinasi tim Guru untuk mengalahkan Bug Boss — eksplorasi strategi berbeda setiap main!`
+                Dalam game ini, kamu dilatih untuk:<br>
+                • Menyusun kombinasi tim hero yang berbeda-beda secara kreatif<br>
+                • Menghadapi tantangan Bug yang semakin sulit di setiap level<br>
+                • Merasakan kesenangan belajar melalui mekanisme game yang seru`,
+        contoh: `💡 <strong>Contoh Penerapan:</strong> Ada banyak kombinasi tim hero untuk mengalahkan Bug Boss — coba eksplorasi strategi berbeda setiap main!`
       }
     };
 
@@ -1969,9 +1999,8 @@
       document.getElementById('tp-modal-contoh').innerHTML = tp.contoh;
       document.getElementById('tp-modal').style.display = 'flex';
     }
-  </script>
 
-  <!-- PANEL TP IN-GAME -->
+  </script> <!-- PANEL TP IN-GAME (dipanggil dari HUD) -->
   <div class="modal-overlay" id="hud-tp-panel" style="display:none;">
     <div class="modal-content" style="max-width:480px;">
       <div
@@ -2004,8 +2033,6 @@
       <button class="btn btn-blue" style="margin-top:1.2rem;" onclick="closeModal('tp-modal')">Tutup ✕</button>
     </div>
   </div>
-
-  <!-- CARD ZOOM OVERLAY -->
   <div id="card-zoom-overlay" class="modal-overlay" onclick="if(event.target===this) closeCardZoom()"
     style="display:none; z-index:10000;">
     <div class="modal-content"
@@ -2025,7 +2052,7 @@
         </div>
       </div>
       <div style="display:flex; gap:10px; margin-top:16px;">
-        <button id="card-zoom-buy-btn" class="btn btn-green" style="display:none;" onclick="">Rekrut 🏫</button>
+        <button id="card-zoom-buy-btn" class="btn btn-green" style="display:none;" onclick="">Beli 🛒</button>
         <button class="btn btn-blue" onclick="closeCardZoom()">Tutup ✕</button>
       </div>
     </div>
