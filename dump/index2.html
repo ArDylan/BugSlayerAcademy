@@ -1,0 +1,1971 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BugSlayer Academy – SMATIQ | Algoritma & Pemrograman</title>
+    <style>
+        :root {
+            --neon-cyan: #00f5ff;
+            --neon-purple: #bf5fff;
+            --neon-pink: #ff2d78;
+            --neon-green: #00ff9f;
+            --neon-orange: #ff6b00;
+            --bg-deep: #020817;
+            --bg-panel: rgba(2, 8, 23, 0.92);
+            --panel-border: rgba(0, 245, 255, 0.3);
+            --overlay-dark: rgba(2, 8, 23, 0.97);
+            --panel-glass: rgba(0, 245, 255, 0.05);
+            --accent-color: var(--neon-cyan);
+            --text-color: #e0f7ff;
+            --white: #ffffff;
+            --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;800&display=swap');
+
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Exo 2', 'Segoe UI', sans-serif;
+            background: var(--bg-image) no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-color);
+            height: 100vh;
+            height: 100dvh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- SCREEN CONTAINERS --- */
+        .screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(0, 20, 50, 0.97) 0%, rgba(2, 8, 23, 0.99) 100%);
+            backdrop-filter: blur(12px);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 1rem;
+            transition: opacity 0.5s;
+        }
+
+        /* Scanline overlay for cyberpunk feel */
+        .screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 245, 255, 0.015) 2px,
+                    rgba(0, 245, 255, 0.015) 4px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .content-box {
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 15, 35, 0.88);
+            padding: clamp(1rem, 3vh, 2rem);
+            border-radius: 16px;
+            border: 1px solid var(--neon-cyan);
+            max-width: 800px;
+            width: 95%;
+            box-shadow: 0 0 40px rgba(0, 245, 255, 0.15), inset 0 0 60px rgba(0, 245, 255, 0.03);
+            max-height: 95vh;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+        }
+
+        /* Corner accents */
+        .content-box::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            right: -1px;
+            width: 30px;
+            height: 30px;
+            border-top: 3px solid var(--neon-cyan);
+            border-right: 3px solid var(--neon-cyan);
+            border-radius: 0 4px 0 0;
+        }
+
+        .content-box::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: -1px;
+            width: 30px;
+            height: 30px;
+            border-bottom: 3px solid var(--neon-purple);
+            border-left: 3px solid var(--neon-purple);
+            border-radius: 0 0 0 4px;
+        }
+
+        /* --- TEXT STYLES --- */
+        .game-title {
+            font-family: 'Orbitron', 'Segoe UI', sans-serif;
+            font-size: clamp(1.6rem, 4vw, 3.2rem);
+            font-weight: 900;
+            color: var(--neon-cyan);
+            margin-bottom: clamp(0.2rem, 1vh, 0.5rem);
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--neon-cyan), 0 0 30px rgba(0, 245, 255, 0.4), 0 0 60px rgba(0, 245, 255, 0.15);
+            line-height: 1.2;
+            letter-spacing: 3px;
+        }
+
+        .narrative-text {
+            font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+            line-height: 1.5;
+            margin-bottom: clamp(0.5rem, 2vh, 1.5rem);
+            color: #a0d4e8;
+            max-width: 90%;
+        }
+
+        .info-text {
+            font-size: clamp(0.65rem, 1.2vw, 0.82rem);
+            color: rgba(0, 245, 255, 0.5);
+            margin-top: clamp(0.5rem, 2vh, 1.5rem);
+            font-style: italic;
+            border-top: 1px solid rgba(0, 245, 255, 0.2);
+            padding-top: clamp(0.5rem, 1vh, 1rem);
+            width: 100%;
+        }
+
+        .tutorial-list {
+            text-align: left;
+            margin: 0.8rem 0;
+            font-size: clamp(0.85rem, 1.8vw, 1.05rem);
+            line-height: 1.7;
+            color: #c8eaf5;
+            padding-left: 20px;
+            width: 100%;
+        }
+
+        .tutorial-list li {
+            margin-bottom: 6px;
+        }
+
+        .tutorial-list strong {
+            color: var(--neon-cyan);
+        }
+
+        /* --- INPUT & BUTTONS --- */
+        .input-group {
+            margin: 1.2rem 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        #player-name-input {
+            padding: 0.75rem 1.5rem;
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            font-family: 'Exo 2', sans-serif;
+            border-radius: 4px;
+            border: 1px solid var(--neon-cyan);
+            background: rgba(0, 245, 255, 0.05);
+            color: var(--neon-cyan);
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            outline: none;
+            transition: 0.3s;
+            letter-spacing: 1px;
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
+
+        #player-name-input::placeholder {
+            color: rgba(0, 245, 255, 0.4);
+        }
+
+        #player-name-input:focus {
+            background: rgba(0, 245, 255, 0.1);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3), inset 0 0 10px rgba(0, 245, 255, 0.05);
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.15) 0%, rgba(191, 95, 255, 0.15) 100%);
+            border: 1px solid var(--neon-cyan);
+            padding: clamp(0.5rem, 1.5vh, 0.8rem) clamp(1.5rem, 4vw, 2.5rem);
+            font-size: clamp(0.95rem, 2.2vw, 1.3rem);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.2), inset 0 0 15px rgba(0, 245, 255, 0.05);
+            text-transform: uppercase;
+            margin-top: clamp(0.5rem, 1.5vh, 1rem);
+            white-space: nowrap;
+            letter-spacing: 2px;
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        .action-btn:hover {
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.3) 0%, rgba(191, 95, 255, 0.3) 100%);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.4), 0 0 60px rgba(0, 245, 255, 0.15);
+            transform: scale(1.04);
+            color: #fff;
+        }
+
+        /* --- CONTROL BUTTONS (TOP RIGHT) --- */
+        .top-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 10000;
+        }
+
+        .control-btn {
+            background: rgba(0, 245, 255, 0.08);
+            border: 1px solid rgba(0, 245, 255, 0.4);
+            color: var(--neon-cyan);
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .control-btn:hover {
+            background: rgba(0, 245, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.4);
+        }
+
+        .control-btn.playing {
+            background: rgba(0, 255, 159, 0.2);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px var(--neon-green);
+            animation: pulse-music 2s infinite;
+        }
+
+        @keyframes pulse-music {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 159, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(0, 255, 159, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 159, 0);
+            }
+        }
+
+        /* --- HUD (IN GAME) --- */
+        #hud {
+            flex: 0 0 auto;
+            background: linear-gradient(90deg, rgba(2, 8, 23, 0.75) 0%, rgba(0, 15, 40, 0.75) 100%);
+            backdrop-filter: blur(14px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 1rem;
+            border-bottom: 1px solid rgba(0, 245, 255, 0.3);
+            font-size: 1rem;
+            font-weight: bold;
+            box-shadow: 0 4px 20px rgba(0, 245, 255, 0.08);
+            z-index: 10;
+            display: none;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .hud-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .hud-right {
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .player-profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 245, 255, 0.08);
+            padding: 4px 12px 4px 4px;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 245, 255, 0.3);
+        }
+
+        .player-avatar {
+            width: 32px;
+            height: 32px;
+            background-color: rgba(0, 245, 255, 0.2);
+            background-image: var(--avatar-image);
+            background-size: cover;
+            background-position: center;
+            border-radius: 4px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1rem;
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 8px rgba(0, 245, 255, 0.3);
+        }
+
+        .intro-logo {
+            width: clamp(70px, 12vw, 110px);
+            margin-bottom: clamp(0.2rem, 1vh, 0.5rem);
+            filter: drop-shadow(0 0 15px rgba(0, 245, 255, 0.6));
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .stat-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            flex: 2;
+        }
+
+        .stat-box {
+            background: rgba(0, 245, 255, 0.06);
+            padding: 0.25rem 0.8rem;
+            border-radius: 4px;
+            border: 1px solid rgba(0, 245, 255, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.88rem;
+            box-shadow: inset 0 0 8px rgba(0, 245, 255, 0.05);
+            white-space: nowrap;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        /* --- ARENA --- */
+        #arena {
+            flex: 1;
+            display: flex;
+            position: relative;
+            display: none;
+            overflow: hidden;
+        }
+
+        #hero-zone,
+        #monster-zone {
+            flex: 1;
+            padding: 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            overflow-y: auto;
+        }
+
+        #hero-zone {
+            background: linear-gradient(to right, rgba(0, 20, 50, 0.45), rgba(0, 10, 30, 0.15));
+            border-right: 1px solid rgba(0, 245, 255, 0.15);
+        }
+
+        #monster-zone {
+            background: linear-gradient(to left, rgba(50, 0, 25, 0.45), rgba(30, 0, 15, 0.15));
+        }
+
+        .zone-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(0.85rem, 2.2vw, 1.5rem);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-weight: 700;
+            text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+            text-align: center;
+        }
+
+        .card-container {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+            align-content: center;
+        }
+
+        /* --- CARDS --- */
+        .card {
+            width: clamp(90px, 14vw, 160px);
+            height: clamp(140px, 21vw, 240px);
+            border-radius: 6px;
+            padding: 4px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.2s;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.8));
+            color: #fff;
+            background-color: #040d1f;
+            border: 1px solid rgba(0, 245, 255, 0.3);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            z-index: 5;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+        }
+
+        .card:active {
+            transform: scale(0.95);
+        }
+
+        .card.legend {
+            border: 1px solid var(--neon-purple);
+            box-shadow: 0 0 20px rgba(191, 95, 255, 0.5);
+        }
+
+        .card-power {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: linear-gradient(135deg, rgba(255, 45, 120, 0.9), rgba(191, 95, 255, 0.9));
+            color: white;
+            padding: 2px;
+            border-radius: 3px;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(0.65rem, 1.1vw, 0.9rem);
+            width: clamp(25px, 4vw, 35px);
+            height: clamp(25px, 4vw, 35px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            z-index: 2;
+            box-shadow: 0 0 8px rgba(255, 45, 120, 0.5);
+        }
+
+        .card-price {
+            font-size: clamp(0.6rem, 1vw, 0.8rem);
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(4px);
+            color: var(--neon-green);
+            padding: 2px 6px;
+            border-radius: 3px;
+            margin-top: auto;
+            margin-bottom: 4px;
+            border: 1px solid var(--neon-green);
+            z-index: 2;
+            box-shadow: 0 0 6px rgba(0, 255, 159, 0.3);
+        }
+
+        .special-effect {
+            font-size: clamp(0.5rem, 0.8vw, 0.62rem);
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.9);
+            color: var(--neon-purple);
+            margin-top: auto;
+            margin-bottom: 2px;
+            padding: 2px 4px;
+            border-radius: 3px;
+            border: 1px solid var(--neon-purple);
+            width: 98%;
+            z-index: 2;
+            line-height: 1.1;
+            box-shadow: 0 0 5px rgba(191, 95, 255, 0.4);
+        }
+
+        .discard-btn {
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: clamp(28px, 5vw, 38px);
+            height: clamp(28px, 5vw, 38px);
+            background: var(--neon-pink);
+            color: white;
+            border-radius: 3px;
+            border: 1px solid white;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(255, 45, 120, 0.6);
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            transition: all 0.2s ease;
+        }
+
+        .discard-btn:active {
+            transform: scale(0.9);
+        }
+
+        .monster-card {
+            width: clamp(140px, 30vw, 240px);
+            height: clamp(210px, 45vw, 340px);
+            border: 2px solid var(--neon-pink);
+            box-shadow: 0 0 30px rgba(255, 45, 120, 0.4);
+        }
+
+        .monster-card .card-power {
+            background: linear-gradient(135deg, rgba(255, 45, 120, 0.95), rgba(80, 0, 40, 0.95));
+            border-color: var(--neon-pink);
+            width: clamp(35px, 6vw, 50px);
+            height: clamp(35px, 6vw, 50px);
+            font-size: clamp(0.9rem, 1.5vw, 1.2rem);
+            box-shadow: 0 0 12px rgba(255, 45, 120, 0.7);
+        }
+
+        .monster-card .card-price {
+            display: none;
+        }
+
+        /* --- ACTION BAR --- */
+        #action-bar {
+            flex: 0 0 auto;
+            min-height: 10vh;
+            background: linear-gradient(90deg, rgba(2, 8, 23, 0.75), rgba(0, 10, 30, 0.75));
+            backdrop-filter: blur(14px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            padding: 10px;
+            border-top: 1px solid rgba(0, 245, 255, 0.2);
+            z-index: 10;
+            display: none;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            padding: 0.6rem 1.5rem;
+            font-size: clamp(0.85rem, 1.8vw, 1.15rem);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+        }
+
+        .btn-blue {
+            background: linear-gradient(135deg, rgba(0, 100, 200, 0.8), rgba(0, 60, 150, 0.8));
+            color: var(--neon-cyan);
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 12px rgba(0, 245, 255, 0.25);
+        }
+
+        .btn-blue:hover {
+            box-shadow: 0 0 25px rgba(0, 245, 255, 0.5);
+            background: rgba(0, 130, 255, 0.5);
+        }
+
+        .btn-green {
+            background: linear-gradient(135deg, rgba(0, 150, 80, 0.8), rgba(0, 100, 50, 0.8));
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+            box-shadow: 0 0 12px rgba(0, 255, 159, 0.25);
+        }
+
+        .btn-green:hover {
+            box-shadow: 0 0 25px rgba(0, 255, 159, 0.5);
+        }
+
+        .btn-red {
+            background: linear-gradient(135deg, rgba(180, 0, 60, 0.8), rgba(120, 0, 40, 0.8));
+            color: var(--neon-pink);
+            border: 1px solid var(--neon-pink);
+            box-shadow: 0 0 12px rgba(255, 45, 120, 0.25);
+        }
+
+        .btn-red:hover {
+            box-shadow: 0 0 25px rgba(255, 45, 120, 0.5);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+            opacity: 0.85;
+        }
+
+        /* --- MODALS --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 5, 20, 0.92);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 10px;
+        }
+
+        .modal-content {
+            background: linear-gradient(160deg, #030d20 0%, #050a18 100%);
+            padding: 1.5rem;
+            border-radius: 8px;
+            width: 95%;
+            max-width: 700px;
+            max-height: 90vh;
+            overflow-y: auto;
+            text-align: center;
+            color: #c8eaf5;
+            animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 50px rgba(0, 245, 255, 0.15), 0 20px 50px rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(0, 245, 255, 0.35);
+            clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+        }
+
+        #shop-modal .modal-content {
+            width: 98%;
+            padding: 1rem;
+        }
+
+        #shop-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            gap: 10px;
+            padding: 10px 5px;
+            overflow-x: auto;
+            width: 100%;
+            min-height: 250px;
+            align-items: center;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .shop-item-wrapper {
+            flex: 0 0 auto;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .modal-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1.3rem, 3.5vw, 1.9rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+            border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .question-text {
+            font-size: clamp(1rem, 2.8vw, 1.5rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+            font-weight: 500;
+            color: #ddf0ff;
+        }
+
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        .answer-btn {
+            background: rgba(0, 245, 255, 0.05);
+            border: 1px solid rgba(0, 245, 255, 0.3);
+            padding: 0.8rem;
+            font-size: clamp(0.85rem, 2.2vw, 1.15rem);
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #c8eaf5;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .answer-btn:hover {
+            background: rgba(0, 245, 255, 0.15);
+            border-color: var(--neon-cyan);
+            transform: translateY(-3px);
+            color: #fff;
+            box-shadow: 0 0 15px rgba(0, 245, 255, 0.2);
+        }
+
+        .answer-btn.correct {
+            background: rgba(0, 255, 159, 0.15);
+            color: var(--neon-green);
+            border-color: var(--neon-green);
+            box-shadow: 0 0 15px rgba(0, 255, 159, 0.3);
+        }
+
+        .answer-btn.wrong {
+            background: rgba(255, 45, 120, 0.15);
+            color: var(--neon-pink);
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 15px rgba(255, 45, 120, 0.3);
+        }
+
+        /* Recap */
+        .recap-container {
+            max-height: 300px;
+            overflow-y: auto;
+            text-align: left;
+            margin-bottom: 20px;
+            background: rgba(0, 245, 255, 0.03);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 245, 255, 0.15);
+        }
+
+        .recap-item {
+            border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+            padding: 8px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .recap-question {
+            font-weight: bold;
+            color: #a0d4e8;
+        }
+
+        .recap-answer {
+            color: var(--neon-green);
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        /* Animations */
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .shake-anim {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            10%,
+            30%,
+            50%,
+            70%,
+            90% {
+                transform: translateX(-10px);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: translateX(10px);
+            }
+        }
+
+        /* Neon glow pulse for borders */
+        @keyframes borderGlow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 8px rgba(0, 245, 255, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(0, 245, 255, 0.6);
+            }
+        }
+
+        #notification {
+            position: fixed;
+            top: 20%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(2, 8, 23, 0.95);
+            color: var(--neon-cyan);
+            padding: 12px 28px;
+            border-radius: 4px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(1rem, 2.5vw, 2rem);
+            font-weight: 700;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 200;
+            border: 1px solid var(--neon-cyan);
+            box-shadow: 0 0 30px rgba(0, 245, 255, 0.4), inset 0 0 20px rgba(0, 245, 255, 0.05);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px);
+        }
+
+        /* --- MOBILE LAYOUT FIX --- */
+        @media (max-width: 768px) {
+            body {
+                height: 100dvh;
+            }
+
+            .top-controls {
+                top: 10px;
+                right: 10px;
+                gap: 8px;
+            }
+
+            .control-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 0.95rem;
+            }
+
+            #hud {
+                padding: 8px 5px;
+                padding-top: 48px;
+            }
+
+            .hud-right {
+                display: none;
+            }
+
+            .stat-group {
+                width: 100%;
+                justify-content: center;
+                gap: 5px;
+            }
+
+            .stat-box {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.75rem;
+                flex: 0 1 auto;
+                justify-content: center;
+            }
+
+            .player-profile {
+                display: none;
+            }
+
+            #arena {
+                flex-direction: column;
+                overflow-y: auto;
+            }
+
+            #hero-zone {
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 245, 255, 0.1);
+                min-height: 240px;
+            }
+
+            #monster-zone {
+                min-height: 320px;
+            }
+
+            #action-bar {
+                padding: 5px;
+                gap: 6px;
+                min-height: 10vh;
+            }
+
+            .btn {
+                padding: 0.5rem;
+                flex: 1;
+                font-size: 0.75rem;
+                justify-content: center;
+                border-radius: 4px;
+            }
+
+            .answers-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- AUDIO -->
+    <audio id="bgm" loop></audio>
+    <!-- SFX -->
+    <audio id="sfx-correct"></audio>
+    <audio id="sfx-wrong"></audio>
+    <audio id="sfx-buy"></audio>
+    <audio id="sfx-levelup"></audio>
+
+    <!-- GLOBAL CONTROLS (Always visible) -->
+    <div class="top-controls">
+        <button class="control-btn" id="music-btn" onclick="toggleMusic()" title="Musik">🔇</button>
+        <button class="control-btn" id="fullscreen-btn" onclick="toggleFullscreen()" title="Layar Penuh">⛶</button>
+    </div>
+
+    <!-- 1. INTRO SCREEN (Halaman Awal) -->
+    <div id="intro-screen" class="screen">
+        <div class="content-box">
+            <img id="intro-logo-img" src="" alt="Logo Code Quest" class="intro-logo">
+            <div class="game-title">BUGSLAYER ACADEMY</div>
+            <p class="narrative-text" style="color:#ffd700; font-weight:700; font-size:clamp(0.8rem,1.5vw,1rem);">
+                ⚔️ Algoritma &amp; Pemrograman · <span style="color:#4facfe;">SMATIQ</span>
+            </p>
+            <p class="narrative-text">
+                "Dunia digital SMATIQ diserang Bug-Bug Jahat yang merusak semua program!
+                Sistem komputer di seluruh sekolah mulai lumpuh satu per satu."
+            </p>
+            <p class="narrative-text">
+                "Sebagai Developer Terpilih, tugasmu adalah merekrut Guru Ahli,
+                menyusun algoritma yang tepat, dan mengalahkan Bug Boss di level terakhir!"
+            </p>
+
+            <button class="action-btn" onclick="goToTP()">LANJUT ➡</button>
+
+            <div class="info-text">
+                Created by <strong>Archie Dylan Ramadhan, S.Kom</strong> | SMAIT ISTIQAMAH | Kontak:
+                0812-2378-1777 | Email: <a href="mailto:archie.dylan4@guru.sma.belajar.id"
+                    style="color:#4facfe; text-decoration:underline;">
+                    archie.dylan4@guru.sma.belajar.id
+                    </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. TP SCREEN -->
+    <div id="tp-screen" class="screen" style="display: none; opacity: 0;">
+        <div class="content-box">
+            <div class="game-title" style="font-size:clamp(1.5rem,3vw,2.2rem);">📚 Tujuan Pembelajaran</div>
+            <p
+                style="color:#4facfe; font-weight:700; font-size:clamp(0.75rem,1.5vw,0.9rem); margin-bottom:1rem; text-transform:uppercase; letter-spacing:1px;">
+                SMATIQ — Algoritma &amp; Pemrograman</p>
+
+            <!-- Kartu-kartu TP -->
+            <div style="width:100%; display:flex; flex-direction:column; gap:10px; margin-bottom:1rem;">
+                <!-- TP 1 -->
+                <div style="background:rgba(255,215,0,0.07); border:2px solid rgba(255,215,0,0.4); border-radius:14px; padding:0.8rem 1rem; text-align:left; cursor:pointer;"
+                    onclick="toggleTPCard('tp-card-1')">
+                    <div style="display:flex; align-items:center; justify-content:space-between;">
+                        <span style="color:#ffd700; font-weight:800; font-size:clamp(0.9rem,1.8vw,1.05rem);">🧠
+                            Berkesadaran (Mindful)</span>
+                        <span id="tp-card-1-icon" style="color:#ffd700; font-size:1.2rem;">＋</span>
+                    </div>
+                    <div id="tp-card-1"
+                        style="display:none; margin-top:0.7rem; color:#e0e0e0; font-size:clamp(0.8rem,1.6vw,0.95rem); line-height:1.6;">
+                        Peserta didik mampu <strong style="color:#ffd700">memahami proses berpikir</strong> dalam
+                        menyusun algoritma dan menulis program, serta <strong style="color:#ffd700">merefleksikan
+                            kesalahan</strong> yang ditemukan untuk memperbaiki solusi.<br><br>
+                        Dalam game ini kamu dilatih:<br>
+                        • Menyusun strategi sebelum menyerang Bug<br>
+                        • Merefleksikan pilihan hero yang paling efektif<br>
+                        • Belajar dari setiap jawaban yang salah<br><br>
+                        <span style="color:#ffd700; font-size:0.9em;">💡 Saat menjawab soal dan jawabanmu salah,
+                            perhatikan jawaban yang benar — itulah berpikir reflektif!</span>
+                    </div>
+                </div>
+                <!-- TP 2 -->
+                <div style="background:rgba(79,172,254,0.07); border:2px solid rgba(79,172,254,0.4); border-radius:14px; padding:0.8rem 1rem; text-align:left; cursor:pointer;"
+                    onclick="toggleTPCard('tp-card-2')">
+                    <div style="display:flex; align-items:center; justify-content:space-between;">
+                        <span style="color:#4facfe; font-weight:800; font-size:clamp(0.9rem,1.8vw,1.05rem);">🔗 Bermakna
+                            (Meaningful)</span>
+                        <span id="tp-card-2-icon" style="color:#4facfe; font-size:1.2rem;">＋</span>
+                    </div>
+                    <div id="tp-card-2"
+                        style="display:none; margin-top:0.7rem; color:#e0e0e0; font-size:clamp(0.8rem,1.6vw,0.95rem); line-height:1.6;">
+                        Peserta didik mampu <strong style="color:#4facfe">menghubungkan konsep algoritma dan
+                            pemrograman</strong> dengan permasalahan nyata serta <strong
+                            style="color:#4facfe">menerapkannya untuk menghasilkan solusi</strong> yang relevan.<br><br>
+                        Dalam game ini kamu dilatih:<br>
+                        • Memahami bahwa algoritma adalah solusi masalah nyata<br>
+                        • Menghubungkan konsep variabel, loop, dan fungsi ke kehidupan sehari-hari<br>
+                        • Melihat pemrograman sebagai alat membangun sesuatu yang berguna<br><br>
+                        <span style="color:#4facfe; font-size:0.9em;">💡 Bug Syntax Error di Level 1 merepresentasikan
+                            masalah nyata programmer pemula!</span>
+                    </div>
+                </div>
+                <!-- TP 3 -->
+                <div style="background:rgba(46,204,113,0.07); border:2px solid rgba(46,204,113,0.4); border-radius:14px; padding:0.8rem 1rem; text-align:left; cursor:pointer;"
+                    onclick="toggleTPCard('tp-card-3')">
+                    <div style="display:flex; align-items:center; justify-content:space-between;">
+                        <span style="color:#2ecc71; font-weight:800; font-size:clamp(0.9rem,1.8vw,1.05rem);">🎉
+                            Menggembirakan (Joyful)</span>
+                        <span id="tp-card-3-icon" style="color:#2ecc71; font-size:1.2rem;">＋</span>
+                    </div>
+                    <div id="tp-card-3"
+                        style="display:none; margin-top:0.7rem; color:#e0e0e0; font-size:clamp(0.8rem,1.6vw,0.95rem); line-height:1.6;">
+                        Peserta didik mampu <strong style="color:#2ecc71">mengeksplorasi berbagai cara penyelesaian
+                            masalah</strong> melalui aktivitas pemrograman yang <strong style="color:#2ecc71">menarik,
+                            menantang, dan mendorong kreativitas</strong>.<br><br>
+                        Dalam game ini kamu dilatih:<br>
+                        • Menyusun kombinasi tim hero yang berbeda secara kreatif<br>
+                        • Menghadapi tantangan Bug yang semakin sulit di setiap level<br>
+                        • Merasakan kesenangan belajar lewat mekanisme game yang seru<br><br>
+                        <span style="color:#2ecc71; font-size:0.9em;">💡 Ada banyak kombinasi tim hero — coba eksplorasi
+                            strategi berbeda setiap main!</span>
+                    </div>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="goToTutorial()">LANJUT — CARA BERMAIN ➡</button>
+        </div>
+    </div>
+
+    <!-- 3. TUTORIAL / CARA BERMAIN SCREEN -->
+    <div id="tutorial-screen" class="screen" style="display: none; opacity: 0;">
+        <div class="content-box">
+            <div class="game-title" style="font-size:clamp(1.5rem,3vw,2rem);">⚔️ CARA BERMAIN</div>
+            <p
+                style="color:#4facfe; font-weight:700; font-size:clamp(0.75rem,1.5vw,0.9rem); margin-bottom:0.8rem; text-transform:uppercase; letter-spacing:1px;">
+                SMATIQ — BugSlayer Academy</p>
+            <div class="input-group">
+                <input type="text" id="player-name-input" placeholder="Masukkan Nama Developer..." autocomplete="off">
+            </div>
+            <ul class="tutorial-list">
+                <li>📝 <strong>Kerjakan Soal:</strong> Jawab soal Algoritma &amp; Pemrograman untuk mendapatkan koin
+                    debug.</li>
+                <li>🛒 <strong>Rekrut Guru:</strong> Gunakan koin untuk merekrut Guru Ahli. Makin tinggi tier,
+                    makin kuat!</li>
+                <li>⚔️ <strong>Susun Tim:</strong> Kamu bisa membawa maksimal <strong>5 Guru</strong> sekaligus.</li>
+                <li>🗑️ <strong>Hapus Guru:</strong> Jika tim penuh atau ingin ganti strategi, hapus guru lama dengan
+                    menekan ikon sampah di kartu.</li>
+                <li>🐛 <strong>Serang Bug:</strong> Pastikan Total Power Tim kamu lebih besar dari Bug Power untuk
+                    menang.</li>
+            </ul>
+            <button class="action-btn" onclick="startGame()">MULAI CODING! 🚀</button>
+        </div>
+    </div>
+
+    <!-- 3. GAMEPLAY SCREEN (HUD, ARENA, ACTION) -->
+    <div id="hud">
+        <div class="hud-left">
+            <button class="control-btn" onclick="goHome()" title="Beranda"
+                style="width:35px;height:35px;font-size:1rem;background:rgba(255,45,120,0.2);border-color:var(--neon-pink);color:var(--neon-pink);">🏠</button>
+            <button class="control-btn" id="hud-tp-btn" title="Tujuan Pembelajaran"
+                style="width:35px;height:35px;font-size:0.85rem;background:rgba(0,245,255,0.1);border-color:var(--neon-cyan);color:var(--neon-cyan);font-weight:900;"
+                onclick="document.getElementById('hud-tp-panel').style.display='flex'">📚</button>
+            <div class="player-profile">
+                <div class="player-avatar"></div>
+                <span id="player-name-display">Developer</span>
+            </div>
+        </div>
+        <div class="stat-group">
+            <div class="stat-box"><span>🛡️ Lvl:</span><span id="level-display" style="color:var(--neon-cyan);">1</span>
+            </div>
+            <div class="stat-box"><span>🪙 Koin:</span><span id="money-display"
+                    style="color:var(--neon-green);">0</span></div>
+            <div class="stat-box"><span>💻 Hero:</span><span id="player-power-display"
+                    style="color:var(--neon-purple);">0</span></div>
+            <div class="stat-box"><span>🐛 Bug:</span><span id="monster-power-display"
+                    style="color:var(--neon-pink);">690</span></div>
+        </div>
+        <div class="hud-right"></div>
+    </div>
+
+    <div id="arena">
+        <div id="hero-zone">
+            <div class="zone-title" style="color:var(--neon-cyan);">Tim Hero (Max 5)</div>
+            <div class="card-container" id="my-heroes">
+                <div style="opacity: 0.7; font-style: italic; color: #ddd; font-size: 1.2rem; margin-top: 50px;">
+                    Belum ada hero programmer.
+                </div>
+            </div>
+            <div id="buff-indicator"
+                style="margin-top:10px; color: #ffd700; font-weight:bold; display:none; font-size: 1rem; text-shadow: 0 0 5px gold;">
+                <!-- Akan diisi otomatis oleh JS -->
+            </div>
+        </div>
+        <div id="monster-zone">
+            <div class="zone-title" style="color:var(--neon-pink);">Zona Bug 🐛</div>
+            <div class="card-container" id="current-monster"></div>
+        </div>
+    </div>
+
+    <div id="action-bar">
+        <button class="btn btn-blue" onclick="openQuestion()">📝 Kerjakan Soal</button>
+        <button class="btn btn-green" onclick="openShop()">🛒 Rekrut Hero</button>
+        <button class="btn btn-red" onclick="attackMonster()">🐛 Debug!</button>
+    </div>
+
+    <div id="notification">Notification</div>
+
+    <!-- MODALS -->
+    <div class="modal-overlay" id="question-modal">
+        <div class="modal-content">
+            <div class="modal-header" id="q-category">Kategori</div>
+            <div class="question-text" id="q-text">Isi pertanyaan...</div>
+            <div class="answers-grid" id="q-options"></div>
+            <button class="btn btn-red" style="margin-top: 20px;" onclick="closeModal('question-modal')">Batal</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="shop-modal">
+        <div class="modal-content">
+            <div class="modal-header">Rekrut Hero Programmer</div>
+            <p>Pilih hero untuk tim coding kamu! (Maks 5 Slot)</p>
+            <div id="shop-container"></div>
+            <button class="btn btn-red" style="margin-top: 20px;" onclick="closeModal('shop-modal')">Tutup</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="result-modal">
+        <div class="modal-content">
+            <div class="modal-header" id="result-title">Hasil</div>
+            <div class="question-text" id="result-message">Pesan...</div>
+
+            <div id="final-recap-area" style="display: none;">
+                <h3>Rekapan Jawaban Benar:</h3>
+                <div class="recap-container" id="recap-list"></div>
+                <div style="margin-top: 20px;"><button class="btn btn-green" onclick="location.reload()">🔄 Main
+                        Lagi</button></div>
+            </div>
+
+            <div id="normal-nav-buttons">
+                <button class="btn btn-green" onclick="location.reload()" id="btn-restart">Main Ulang</button>
+                <button class="btn btn-blue" onclick="closeModal('result-modal')" id="btn-next-level">Lanjut Level
+                    Berikutnya ➡</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="home-confirm-modal">
+        <div class="modal-content" style="max-width:400px;">
+            <div class="modal-header" style="color:var(--neon-pink);">⚠ Konfirmasi Keluar</div>
+            <div class="question-text">
+                Apakah Anda yakin ingin kembali ke Halaman Awal?<br>
+                <span style="font-size:0.9rem;color:rgba(0,245,255,0.5);">Semua progres permainan akan hilang.</span>
+            </div>
+            <div style="display:flex;justify-content:center;gap:15px;margin-top:20px;">
+                <button class="btn btn-red" onclick="location.reload()">Keluar</button>
+                <button class="btn btn-blue" onclick="closeModal('home-confirm-modal')">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="discard-confirm-modal">
+        <div class="modal-content" style="max-width:400px;">
+            <div class="modal-header" style="color:var(--neon-pink);">⚠ Buang Pahlawan?</div>
+            <div class="question-text">
+                Apakah Anda yakin ingin membuang pahlawan ini?<br>
+                <span style="font-size:0.9rem;color:rgba(0,245,255,0.5);">Pahlawan akan dihapus dari tim Anda secara
+                    permanen.</span>
+            </div>
+            <div style="display:flex;justify-content:center;gap:15px;margin-top:20px;">
+                <button class="btn btn-red" onclick="executeDiscard()">Ya, Buang</button>
+                <button class="btn btn-blue" onclick="closeModal('discard-confirm-modal')">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // 🎨 KONFIGURASI ASET — Edit semua link di sini dengan mudah!
+        // ============================================================
+        const ASSETS = {
+            // --- Gambar Latar & UI ---
+            background: "latar.png",  // Background arena/game
+            logo: "https://i.imgur.com/oXQCjfQ.png",  // Logo di halaman intro
+            avatar: "https://i.imgur.com/oXQCjfQ.png",  // Avatar profil pemain di HUD
+
+            // --- Audio ---
+            bgm: "https://github.com/belajarituseru39-gif/Liga-Pahlawan/raw/refs/heads/main/LIGA%20PAHLAWAN%20(2).mp3",
+            sfxCorrect: "https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3",
+            sfxWrong: "https://assets.mixkit.co/active_storage/sfx/3112/3112-preview.mp3",
+            sfxBuy: "https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3",
+            sfxLevelup: "https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3",
+
+            // --- Gambar Hero (urutan sesuai id di HERO_DB) ---
+            heroes: {
+                1: "hero/dimas.png",  // dimas
+                2: "hero/zubair.png",  // zubir
+                3: "hero/yahya.png",  // yahya
+                4: "hero/archie.png",  // archie
+                5: "hero/eko.png",  // Ustadz Eko
+                6: "hero/zulian_nabila.png",  // Ustadzah Zulian &Nabila
+                7: "hero/habibah.png",  // Ustadzah Habibah
+                8: "hero/nila_holidah.png",  // Ustadzah Nila & Holidah
+                9: "hero/zahro.png",  // Ustadz Munzir
+                10: "hero/riska.png",  // Ustadzah Riska
+                11: "hero/nita_ainun_balqis.png",  // Ustadzah Nita Ainun Balqis
+                12: "hero/munzir.png",  // Ustadz Munzir
+            },
+
+            // --- Gambar Monster (urutan sesuai level di MONSTER_LEVELS) ---
+            monsters: {
+                1: "monster/monster1.png",  // Level 1 – Iblis Karang
+                2: "monster/monster2.png",  // Level 2 – Lidah Api Gurun
+                3: "monster/monster3.png",  // Level 3 – Beruang Batu
+                4: "monster/monster4.png",  // Level 4 – Golem Robo
+                5: "monster/monster5.png",  // Level 5 – Jenderal Naga Hitam
+            }
+        };
+
+        // --- Terapkan ASSETS ke elemen HTML & CSS ---
+        (function applyAssets() {
+            // CSS variables untuk gambar yang dipakai di CSS
+            document.documentElement.style.setProperty('--bg-image', `url('${ASSETS.background}')`);
+            document.documentElement.style.setProperty('--avatar-image', `url('${ASSETS.avatar}')`);
+
+            // Logo intro
+            document.getElementById('intro-logo-img').src = ASSETS.logo;
+
+            // Audio
+            document.getElementById('bgm').src = ASSETS.bgm;
+            document.getElementById('sfx-correct').src = ASSETS.sfxCorrect;
+            document.getElementById('sfx-wrong').src = ASSETS.sfxWrong;
+            document.getElementById('sfx-buy').src = ASSETS.sfxBuy;
+            document.getElementById('sfx-levelup').src = ASSETS.sfxLevelup;
+        })();
+        // ============================================================
+
+        // --- SCREEN NAVIGATION ---
+        function goHome() {
+            document.getElementById('home-confirm-modal').style.display = 'flex';
+        }
+
+        function goToTP() {
+            const intro = document.getElementById('intro-screen');
+            intro.style.opacity = '0';
+            setTimeout(() => {
+                intro.style.display = 'none';
+                const tp = document.getElementById('tp-screen');
+                tp.style.display = 'flex';
+                void tp.offsetWidth;
+                tp.style.opacity = '1';
+            }, 500);
+        }
+
+        function toggleTPCard(id) {
+            const card = document.getElementById(id);
+            const iconId = id + '-icon';
+            const icon = document.getElementById(iconId);
+            if (card.style.display === 'none') {
+                card.style.display = 'block';
+                icon.innerText = '－';
+            } else {
+                card.style.display = 'none';
+                icon.innerText = '＋';
+            }
+        }
+
+        function goToTutorial() {
+            // Transition from TP screen to Tutorial screen
+            const tp = document.getElementById('tp-screen');
+            tp.style.opacity = '0';
+            setTimeout(() => {
+                tp.style.display = 'none';
+                const tutorial = document.getElementById('tutorial-screen');
+                tutorial.style.display = 'flex';
+                void tutorial.offsetWidth;
+                tutorial.style.opacity = '1';
+            }, 500);
+        }
+
+        // --- DATABASE HERO (DIPERBARUI) ---
+        const HERO_DB = [
+            // COMMON
+            { id: 1, name: "Mr. Dims", tier: "common", power: 270, price: 20, imgUrl: ASSETS.heroes[1] },
+            { id: 2, name: "Ustadz Zubair", tier: "common", power: 170, price: 15, imgUrl: ASSETS.heroes[2] },
+            { id: 3, name: "Coach Yahya", tier: "common", power: 240, price: 17, imgUrl: ASSETS.heroes[3] },
+            { id: 4, name: "Ustadz Archie", tier: "common", power: 250, price: 19, imgUrl: ASSETS.heroes[4] },
+            { id: 5, name: "Ustadz Eko", tier: "common", power: 300, price: 24, imgUrl: ASSETS.heroes[5] },
+
+            // RARE
+            { id: 6, name: "Ustadzah Zulian & Nabila", tier: "rare", power: 400, price: 50, imgUrl: ASSETS.heroes[6] },
+            { id: 7, name: "Ustadzah Habibah", tier: "rare", power: 330, price: 33, imgUrl: ASSETS.heroes[7] },
+            { id: 8, name: "Ustadzah Nila & Holidah", tier: "rare", power: 450, price: 60, imgUrl: ASSETS.heroes[8] },
+            { id: 9, name: "Ustadzah Zahro", tier: "rare", power: 350, price: 37, imgUrl: ASSETS.heroes[9] },
+
+            // LEGEND
+            { id: 10, name: "Ustadzah Riska", tier: "legend", power: 550, price: 120, effect: "+30 All Power", imgUrl: ASSETS.heroes[10] },
+            { id: 11, name: "Ustadzah Nita", tier: "legend", power: 550, price: 120, effect: "-30 Power Bug", imgUrl: ASSETS.heroes[11] },
+            { id: 12, name: "Syekh Munzir", tier: "legend", power: 550, price: 120, effect: "+10 All Power", imgUrl: ASSETS.heroes[12] }
+        ];
+
+        // --- DATABASE SOAL ALGORITMA & PEMROGRAMAN ---
+        const QUESTION_DB = [
+            // ==========================================
+            // TINGKAT MUDAH (LEVEL 1)
+            // ==========================================
+            { difficulty: "easy", category: "KONSEP DASAR", text: "Urutan langkah-langkah logis untuk menyelesaikan suatu masalah disebut ....", correct: "Algoritma", options: ["Program", "Algoritma", "Variabel", "Fungsi"] },
+            { difficulty: "easy", category: "KONSEP DASAR", text: "Representasi algoritma menggunakan simbol-simbol gambar disebut ....", correct: "Flowchart", options: ["Pseudocode", "Flowchart", "Kode program", "Diagram ER"] },
+            { difficulty: "easy", category: "KONSEP DASAR", text: "Simbol flowchart berbentuk persegi panjang digunakan untuk ....", correct: "Proses", options: ["Keputusan", "Proses", "Input/Output", "Mulai/Selesai"] },
+            { difficulty: "easy", category: "KONSEP DASAR", text: "Simbol flowchart berbentuk belah ketupat digunakan untuk ....", correct: "Keputusan (percabangan)", options: ["Proses", "Keputusan (percabangan)", "Input/Output", "Mulai"] },
+            { difficulty: "easy", category: "KONSEP DASAR", text: "Simbol flowchart berbentuk oval/ellips digunakan untuk ....", correct: "Mulai / Selesai", options: ["Proses", "Input/Output", "Mulai / Selesai", "Percabangan"] },
+            { difficulty: "easy", category: "KONSEP DASAR", text: "Algoritma yang ditulis menggunakan bahasa yang menyerupai bahasa pemrograman disebut ....", correct: "Pseudocode", options: ["Flowchart", "Source code", "Pseudocode", "Bytecode"] },
+            { difficulty: "easy", category: "KONSEP DASAR", text: "Perintah pertama yang harus ada dalam setiap flowchart adalah ....", correct: "Start (Mulai)", options: ["Input", "Proses", "Start (Mulai)", "Output"] },
+            { difficulty: "easy", category: "KONSEP DASAR", text: "Tiga struktur dasar algoritma adalah urutan, percabangan, dan ....", correct: "Pengulangan", options: ["Variabel", "Pengulangan", "Fungsi", "Array"] },
+            { difficulty: "easy", category: "PEMROGRAMAN DASAR", text: "Tempat penyimpanan data sementara dalam program disebut ....", correct: "Variabel", options: ["Fungsi", "Loop", "Variabel", "Array"] },
+            { difficulty: "easy", category: "PEMROGRAMAN DASAR", text: "Perintah untuk menampilkan teks ke layar dalam banyak bahasa pemrograman adalah ....", correct: "Print / Output", options: ["Input", "Print / Output", "Loop", "If"] },
+            { difficulty: "easy", category: "PEMROGRAMAN DASAR", text: "Nilai yang tidak bisa diubah selama program berjalan disebut ....", correct: "Konstanta", options: ["Variabel", "Konstanta", "Array", "Fungsi"] },
+            { difficulty: "easy", category: "PEMROGRAMAN DASAR", text: "Tipe data yang menyimpan angka bulat (tanpa koma) disebut ....", correct: "Integer", options: ["Float", "String", "Integer", "Boolean"] },
+            { difficulty: "easy", category: "PEMROGRAMAN DASAR", text: "Tipe data yang menyimpan teks/huruf disebut ....", correct: "String", options: ["Integer", "Boolean", "Float", "String"] },
+            { difficulty: "easy", category: "PEMROGRAMAN DASAR", text: "Tipe data yang hanya bernilai benar atau salah disebut ....", correct: "Boolean", options: ["Integer", "String", "Boolean", "Float"] },
+            { difficulty: "easy", category: "PEMROGRAMAN DASAR", text: "Operator + , - , * , / termasuk jenis operator ....", correct: "Aritmatika", options: ["Logika", "Perbandingan", "Aritmatika", "Penugasan"] },
+            { difficulty: "easy", category: "PEMROGRAMAN DASAR", text: "Simbol = dalam pemrograman umumnya digunakan untuk ....", correct: "Penugasan (assignment)", options: ["Perbandingan sama dengan", "Penugasan (assignment)", "Penjumlahan", "Deklarasi variabel"] },
+            { difficulty: "easy", category: "SCRATCH / VISUAL", text: "Scratch adalah bahasa pemrograman yang bersifat ....", correct: "Visual berbasis blok", options: ["Teks murni", "Visual berbasis blok", "Assembly", "HTML"] },
+            { difficulty: "easy", category: "SCRATCH / VISUAL", text: "Blok 'when green flag clicked' di Scratch berfungsi untuk ....", correct: "Memulai program saat bendera diklik", options: ["Menghentikan program", "Memulai program saat bendera diklik", "Mengulang perintah", "Membuat variabel"] },
+            { difficulty: "easy", category: "SCRATCH / VISUAL", text: "Blok 'repeat 10' di Scratch termasuk struktur ....", correct: "Pengulangan (loop)", options: ["Percabangan", "Input", "Pengulangan (loop)", "Output"] },
+            { difficulty: "easy", category: "SCRATCH / VISUAL", text: "Untuk membuat karakter bergerak di Scratch, blok yang digunakan adalah ....", correct: "Move ... steps", options: ["Say ...", "Move ... steps", "Wait ...", "Play sound"] },
+            { difficulty: "easy", category: "SCRATCH / VISUAL", text: "Blok 'if ... then' di Scratch termasuk struktur ....", correct: "Percabangan", options: ["Pengulangan", "Percabangan", "Variabel", "Input"] },
+
+            // ==========================================
+            // TINGKAT SEDANG (LEVEL 2 & 3)
+            // ==========================================
+            { difficulty: "medium", category: "ALGORITMA", text: "Perhatikan flowchart: A=5, B=3, C = A+B. Nilai C adalah ....", correct: "8", options: ["2", "8", "15", "53"] },
+            { difficulty: "medium", category: "ALGORITMA", text: "Struktur percabangan IF-ELSE digunakan jika ....", correct: "Ada dua kemungkinan kondisi", options: ["Hanya satu kondisi", "Ada dua kemungkinan kondisi", "Perlu pengulangan", "Tidak ada kondisi"] },
+            { difficulty: "medium", category: "ALGORITMA", text: "Loop FOR biasanya digunakan ketika jumlah pengulangan sudah ....", correct: "Diketahui", options: ["Tidak diketahui", "Diketahui", "Tak terbatas", "Bergantung input user"] },
+            { difficulty: "medium", category: "ALGORITMA", text: "Loop WHILE biasanya digunakan ketika pengulangan bergantung pada ....", correct: "Kondisi yang diperiksa", options: ["Jumlah tetap", "Kondisi yang diperiksa", "Nama variabel", "Tipe data"] },
+            { difficulty: "medium", category: "ALGORITMA", text: "Jika A=10, B=4, hasil dari A MOD B (sisa bagi) adalah ....", correct: "2", options: ["0", "1", "2", "4"] },
+            { difficulty: "medium", category: "ALGORITMA", text: "Proses menelusuri data satu per satu dari awal hingga akhir disebut ....", correct: "Sequential Search", options: ["Binary Search", "Sequential Search", "Merge Sort", "Stack"] },
+            { difficulty: "medium", category: "ALGORITMA", text: "Algoritma yang membandingkan elemen berdekatan dan menukar jika tidak urut disebut ....", correct: "Bubble Sort", options: ["Binary Search", "Bubble Sort", "Rekursi", "Hashing"] },
+            { difficulty: "medium", category: "ALGORITMA", text: "Kompleksitas waktu algoritma yang terbaik (paling efisien) adalah ....", correct: "O(1)", options: ["O(n^2)", "O(n)", "O(log n)", "O(1)"] },
+            { difficulty: "medium", category: "PEMROGRAMAN", text: "Blok kode yang dapat dipanggil berulang kali dengan nama tertentu disebut ....", correct: "Fungsi / Function", options: ["Variabel", "Loop", "Fungsi / Function", "Array"] },
+            { difficulty: "medium", category: "PEMROGRAMAN", text: "Kumpulan data bertipe sama yang disimpan dalam satu nama variabel disebut ....", correct: "Array", options: ["String", "Integer", "Array", "Boolean"] },
+            { difficulty: "medium", category: "PEMROGRAMAN", text: "Indeks array pada kebanyakan bahasa pemrograman dimulai dari angka ....", correct: "0", options: ["1", "0", "-1", "Bebas"] },
+            { difficulty: "medium", category: "PEMROGRAMAN", text: "Operator == dalam pemrograman digunakan untuk ....", correct: "Membandingkan dua nilai (sama dengan)", options: ["Penugasan", "Membandingkan dua nilai (sama dengan)", "Penjumlahan", "Deklarasi variabel"] },
+            { difficulty: "medium", category: "PEMROGRAMAN", text: "Operator && (AND) menghasilkan TRUE jika ....", correct: "Kedua kondisi bernilai TRUE", options: ["Salah satu TRUE", "Kedua kondisi bernilai TRUE", "Kedua FALSE", "Tidak ada kondisi"] },
+            { difficulty: "medium", category: "PEMROGRAMAN", text: "Operator || (OR) menghasilkan TRUE jika ....", correct: "Minimal satu kondisi TRUE", options: ["Kedua TRUE", "Minimal satu kondisi TRUE", "Kedua FALSE", "Tidak ada kondisi"] },
+            { difficulty: "medium", category: "PEMROGRAMAN", text: "Komentar dalam kode program berfungsi untuk ....", correct: "Memberi penjelasan, tidak dieksekusi", options: ["Menjalankan program", "Memberi penjelasan, tidak dieksekusi", "Menyimpan nilai", "Memanggil fungsi"] },
+            { difficulty: "medium", category: "PEMROGRAMAN", text: "Kesalahan logika dalam program yang tidak menyebabkan error tetapi hasil salah disebut ....", correct: "Logic error", options: ["Syntax error", "Runtime error", "Logic error", "Compile error"] },
+            { difficulty: "medium", category: "INTERNET & TEKNOLOGI", text: "HTML adalah singkatan dari ....", correct: "HyperText Markup Language", options: ["High Text Making Language", "HyperText Markup Language", "Hyper Transfer Markup Logic", "High Transfer Markup Language"] },
+            { difficulty: "medium", category: "INTERNET & TEKNOLOGI", text: "Tag HTML yang digunakan untuk membuat judul terbesar adalah ....", correct: "<h1>", options: ["<title>", "<h1>", "<header>", "<big>"] },
+            { difficulty: "medium", category: "INTERNET & TEKNOLOGI", text: "CSS digunakan dalam pembuatan website untuk ....", correct: "Mengatur tampilan/style halaman", options: ["Menyimpan data", "Mengatur tampilan/style halaman", "Menjalankan logika", "Mengatur database"] },
+            { difficulty: "medium", category: "INTERNET & TEKNOLOGI", text: "JavaScript pada website berfungsi untuk ....", correct: "Menambahkan interaktivitas", options: ["Mengatur warna", "Menyimpan file", "Menambahkan interaktivitas", "Membuat gambar"] },
+
+            // ==========================================
+            // TINGKAT SULIT (LEVEL 4 & 5)
+            // ==========================================
+            { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Binary Search bekerja pada data yang sudah ....", correct: "Terurut (sorted)", options: ["Acak", "Terurut (sorted)", "Bertipe integer", "Berukuran kecil"] },
+            { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Algoritma yang memanggil dirinya sendiri disebut ....", correct: "Rekursi", options: ["Iterasi", "Rekursi", "Greedy", "Dynamic Programming"] },
+            { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Struktur data LIFO (Last In First Out) dimiliki oleh ....", correct: "Stack", options: ["Queue", "Stack", "Array", "Graph"] },
+            { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Struktur data FIFO (First In First Out) dimiliki oleh ....", correct: "Queue", options: ["Stack", "Queue", "Tree", "Hash Table"] },
+            { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Kompleksitas waktu Bubble Sort pada kasus terburuk adalah ....", correct: "O(n^2)", options: ["O(1)", "O(n)", "O(n^2)", "O(log n)"] },
+            { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Pada Binary Search, data dicari dengan cara ....", correct: "Membagi data menjadi dua bagian", options: ["Urutan dari awal", "Membagi data menjadi dua bagian", "Mengurutkan dulu", "Menggunakan hash"] },
+            { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Sebuah fungsi rekursif HARUS memiliki kondisi ....", correct: "Base case (kondisi berhenti)", options: ["Loop tak terbatas", "Base case (kondisi berhenti)", "Array global", "Input dari user"] },
+            { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Nilai faktorial dari 5! adalah ....", correct: "120", options: ["20", "60", "100", "120"] },
+            { difficulty: "hard", category: "ALGORITMA LANJUT", text: "Jika array A = [3, 7, 1, 9, 4], setelah satu pass Bubble Sort elemen terbesar berada di ....", correct: "Posisi paling akhir", options: ["Posisi awal", "Posisi tengah", "Posisi paling akhir", "Tidak berubah"] },
+            { difficulty: "hard", category: "PEMROGRAMAN LANJUT", text: "OOP adalah singkatan dari ....", correct: "Object-Oriented Programming", options: ["Open Output Process", "Object-Oriented Programming", "Operational Output Protocol", "Online Object Program"] },
+            { difficulty: "hard", category: "PEMROGRAMAN LANJUT", text: "Dalam OOP, cetak biru (blueprint) untuk membuat objek disebut ....", correct: "Class", options: ["Method", "Attribute", "Class", "Interface"] },
+            { difficulty: "hard", category: "PEMROGRAMAN LANJUT", text: "Kemampuan OOP untuk menyembunyikan data dan hanya membuka akses tertentu disebut ....", correct: "Enkapsulasi", options: ["Pewarisan", "Polimorfisme", "Enkapsulasi", "Abstraksi"] },
+            { difficulty: "hard", category: "PEMROGRAMAN LANJUT", text: "Kemampuan sebuah class mengambil properti dari class lain disebut ....", correct: "Pewarisan (Inheritance)", options: ["Enkapsulasi", "Polimorfisme", "Pewarisan (Inheritance)", "Abstraksi"] },
+            { difficulty: "hard", category: "PEMROGRAMAN LANJUT", text: "Kesalahan yang terjadi saat program sedang berjalan disebut ....", correct: "Runtime Error", options: ["Syntax Error", "Logic Error", "Runtime Error", "Compile Error"] },
+            { difficulty: "hard", category: "PEMROGRAMAN LANJUT", text: "Proses mencari dan memperbaiki bug dalam program disebut ....", correct: "Debugging", options: ["Compiling", "Rendering", "Debugging", "Deploying"] },
+            { difficulty: "hard", category: "PEMROGRAMAN LANJUT", text: "Bahasa pemrograman Python termasuk kategori ....", correct: "High-level language", options: ["Machine language", "Assembly language", "High-level language", "Binary language"] },
+            { difficulty: "hard", category: "PEMROGRAMAN LANJUT", text: "Versi kontrol kode program yang populer digunakan developer adalah ....", correct: "Git", options: ["CSS", "HTML", "Git", "PHP"] }
+        ];
+
+        const MONSTER_LEVELS = [
+            { level: 1, power: 790, name: "Bug Syntax Error", imgUrl: ASSETS.monsters[1] },
+            { level: 2, power: 1111, name: "Null Pointer Exception", imgUrl: ASSETS.monsters[2] },
+            { level: 3, power: 1450, name: "Infinite Loop Daemon", imgUrl: ASSETS.monsters[3] },
+            { level: 4, power: 1800, name: "Memory Leak Golem", imgUrl: ASSETS.monsters[4] },
+            { level: 5, power: 2150, name: "Virus Root Boss", imgUrl: ASSETS.monsters[5] }
+        ];
+
+        // --- STATE ---
+        let state = {
+            playerName: "Developer",
+            money: 0,
+            level: 1,
+            myHeroes: [],
+            monsterPower: 690,
+            correctAnswersLog: [],
+            askedQuestions: [] // Menyimpan soal yang sudah pernah ditanyakan
+        };
+
+        // --- START GAME LOGIC ---
+        function startGame() {
+            const nameInput = document.getElementById('player-name-input').value;
+            if (nameInput.trim() === "") {
+                alert("Mohon masukkan nama Komandan terlebih dahulu!");
+                return;
+            }
+            state.playerName = nameInput;
+            document.getElementById('player-name-display').innerText = state.playerName;
+
+            // Hide Tutorial, Show Game
+            document.getElementById('tutorial-screen').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('tutorial-screen').style.display = 'none';
+                document.getElementById('hud').style.display = 'flex';
+                document.getElementById('arena').style.display = 'flex';
+                document.getElementById('action-bar').style.display = 'flex';
+
+                toggleMusic(true);
+            }, 500);
+
+            initLevel(1);
+        }
+
+        function initLevel(lvl) {
+            const mData = MONSTER_LEVELS.find(m => m.level === lvl);
+            if (!mData) {
+                // TAMAT
+                showFinalVictory();
+                return;
+            }
+
+            state.level = lvl;
+            state.monsterPower = mData.power;
+
+            updateHUD();
+            renderHeroes();
+            renderMonster(mData);
+        }
+
+        // --- CORE FUNCTIONS (UPDATE HUD & BUFF LOGIC) ---
+        function updateHUD() {
+            document.getElementById('level-display').innerText = state.level;
+            document.getElementById('money-display').innerText = "🪙 " + state.money.toLocaleString('id-ID');
+
+            let totalHeroPower = 0;
+            let currentMonsterPower = state.monsterPower;
+            let buffTexts = [];
+
+            let hasCompiler = state.myHeroes.some(h => h.name === "Arch. Compiler");
+            let hasBugSlayer = state.myHeroes.some(h => h.name === "Bug Slayer");
+            let hasAI = state.myHeroes.some(h => h.name === "AI Engineer");
+
+            // Menjumlahkan power dasar dari tiap hero
+            state.myHeroes.forEach(h => totalHeroPower += h.power);
+
+            // Kalkulasi Buff
+            if (hasCompiler) {
+                totalHeroPower += (30 * state.myHeroes.length);
+                buffTexts.push("⚡ Compiler: +30 All");
+            }
+            if (hasAI) {
+                totalHeroPower += (10 * state.myHeroes.length);
+                buffTexts.push("🤖 AI: +10 All");
+            }
+            if (hasBugSlayer) {
+                currentMonsterPower -= 30;
+                buffTexts.push("🐛 Bug Slayer: -30 Bug");
+            }
+
+            // Pastikan power monster tidak di bawah 0
+            if (currentMonsterPower < 0) currentMonsterPower = 0;
+
+            // Update teks di layar
+            document.getElementById('player-power-display').innerText = totalHeroPower;
+            document.getElementById('monster-power-display').innerText = currentMonsterPower;
+
+            // Tampilkan tulisan Buff aktif jika ada Legend di dalam tim
+            const buffIndicator = document.getElementById('buff-indicator');
+            if (buffTexts.length > 0) {
+                buffIndicator.style.display = 'block';
+                buffIndicator.innerHTML = buffTexts.join(" | ");
+            } else {
+                buffIndicator.style.display = 'none';
+            }
+        }
+
+        function renderHeroes() {
+            const container = document.getElementById('my-heroes');
+            container.innerHTML = '';
+            if (state.myHeroes.length === 0) {
+                container.innerHTML = '<div style="opacity: 0.7; font-style: italic; color: #ddd; font-size: 1.2rem; margin-top: 50px;">Belum ada pahlawan.</div>';
+                return;
+            }
+            // Passing index is crucial!
+            state.myHeroes.forEach((hero, index) => container.appendChild(createCard(hero, false, index)));
+        }
+
+        function renderMonster(mData) {
+            const container = document.getElementById('current-monster');
+            container.innerHTML = '';
+            const div = document.createElement('div');
+            div.className = 'card monster-card';
+            div.style.backgroundImage = `url('${mData.imgUrl}')`;
+
+            // Render ulang power dinamis berdasarkan HUD agar sinkron dengan debuff Lunar
+            let displayedMonsterPower = state.monsterPower;
+            if (state.myHeroes.some(h => h.name === "Panglima Lunar")) {
+                displayedMonsterPower -= 30;
+                if (displayedMonsterPower < 0) displayedMonsterPower = 0;
+            }
+
+            // div.innerHTML = `<div class="card-power">${displayedMonsterPower}</div>`;
+            container.appendChild(div);
+        }
+
+        function createCard(hero, isShop, index = null) {
+            const div = document.createElement('div');
+            div.className = `card ${hero.tier}`;
+            if (isShop) div.classList.add('shop-item-wrapper');
+            div.style.backgroundImage = `url('${hero.imgUrl}')`;
+
+            const footerText = isShop ? `Rp ${hero.price.toLocaleString()}` : hero.tier.toUpperCase();
+            const specialText = hero.effect ? `<div class="special-effect">${hero.effect}</div>` : '';
+
+            // Konten HTML dasar kartu
+            // div.innerHTML = `
+            //     <div class="card-power">${hero.power}</div>
+            //     ${specialText}
+            //     <div class="card-price">${footerText}</div>
+            //     `;
+
+            // PENTING: Tambahkan tombol hapus secara manual sebagai elemen DOM
+            if (!isShop && index !== null) {
+                const deleteBtn = document.createElement('div');
+                deleteBtn.className = 'discard-btn';
+                deleteBtn.innerHTML = '🗑️';
+                deleteBtn.title = "Hapus Hero Ini";
+
+                // Event listener langsung
+                deleteBtn.onclick = function (e) {
+                    e.stopPropagation(); // Mencegah klik tembus ke kartu
+                    discardHero(index);
+                };
+
+                div.appendChild(deleteBtn);
+            }
+
+            // Klik kartu untuk membeli (hanya di toko)
+            if (isShop) {
+                div.onclick = () => buyHero(hero);
+            }
+
+            return div;
+        }
+
+        // --- BATTLE & PROGRESSION ---
+        function attackMonster() {
+            if (state.myHeroes.length === 0) {
+                showNotification("Rekrut pahlawan dulu!");
+                return;
+            }
+
+            let totalHeroPower = 0;
+            let currentMonsterPower = state.monsterPower;
+
+            let hasSurya = state.myHeroes.some(h => h.name === "Panglima Surya");
+            let hasLunar = state.myHeroes.some(h => h.name === "Panglima Lunar");
+            let hasGaia = state.myHeroes.some(h => h.name === "Panglima Gaia");
+
+            // Kalkulasi Total Power
+            state.myHeroes.forEach(h => totalHeroPower += h.power);
+            if (hasSurya) totalHeroPower += (30 * state.myHeroes.length);
+            if (hasGaia) totalHeroPower += (10 * state.myHeroes.length);
+            if (hasLunar) {
+                currentMonsterPower -= 30;
+                if (currentMonsterPower < 0) currentMonsterPower = 0;
+            }
+
+            const mZone = document.getElementById('monster-zone');
+            mZone.classList.add('shake-anim');
+            setTimeout(() => mZone.classList.remove('shake-anim'), 500);
+
+            if (totalHeroPower > currentMonsterPower) {
+                playSound('levelup');
+                showLevelUpPopup(state.level);
+            } else {
+                playSound('wrong');
+                showNotification("Kalah Power! Cari dana & beli hero lagi!");
+            }
+        }
+
+        function showLevelUpPopup(lvl) {
+            const modal = document.getElementById('result-modal');
+            document.getElementById('result-title').innerText = `Level ${lvl} Selesai!`;
+            document.getElementById('result-title').style.color = "#2ecc71";
+            document.getElementById('result-message').innerText = `Selamat Komandan ${state.playerName}! Monster berhasil dikalahkan. Siap untuk tantangan berikutnya?`;
+
+            document.getElementById('normal-nav-buttons').style.display = 'block';
+            document.getElementById('final-recap-area').style.display = 'none';
+            document.getElementById('btn-restart').style.display = 'none';
+
+            const nextBtn = document.getElementById('btn-next-level');
+            nextBtn.style.display = 'inline-block';
+            nextBtn.onclick = () => {
+                closeModal('result-modal');
+                initLevel(state.level + 1);
+            };
+
+            modal.style.display = 'flex';
+        }
+
+        function showFinalVictory() {
+            const modal = document.getElementById('result-modal');
+            document.getElementById('result-title').innerText = "MISI SUKSES!";
+            document.getElementById('result-title').style.color = "#ffd700";
+            document.getElementById('result-message').innerText = `Luar Biasa, Komandan ${state.playerName}! Bumi telah aman berkat strategi cerdasmu.`;
+
+            // Hide normal buttons
+            document.getElementById('normal-nav-buttons').style.display = 'none';
+
+            // Show Recap
+            const recapArea = document.getElementById('final-recap-area');
+            const recapList = document.getElementById('recap-list');
+            recapList.innerHTML = '';
+
+            if (state.correctAnswersLog.length > 0) {
+                state.correctAnswersLog.forEach((item, idx) => {
+                    const row = document.createElement('div');
+                    row.className = 'recap-item';
+                    row.innerHTML = `
+                        <div>
+                            <span style="font-size:0.8rem; color:#888;">${item.cat} [${item.lvl}]</span><br>
+                            <span class="recap-question">${item.q}</span>
+                        </div>
+                        <div class="recap-answer">✔ ${item.a}</div>
+                    `;
+                    recapList.appendChild(row);
+                });
+            } else {
+                recapList.innerHTML = '<div style="text-align:center; color:#888;">Tidak ada catatan soal.</div>';
+            }
+
+            recapArea.style.display = 'block';
+            modal.style.display = 'flex';
+        }
+
+        // --- QUIZ LOGIC (SMART DIFFICULTY) ---
+        function getQuestionByDifficulty() {
+            let difficulty = "easy";
+            // Kategori Mudah untuk Level 1 (Default)
+
+            // Kategori Sedang untuk Level 2 dan 3
+            if (state.level === 2 || state.level === 3) difficulty = "medium";
+
+            // Kategori Sulit untuk Level 4 dan 5
+            if (state.level === 4 || state.level === 5) difficulty = "hard";
+
+            // Filter soal yang belum pernah ditanyakan
+            let eligible = QUESTION_DB.filter(q => q.difficulty === difficulty && !state.askedQuestions.includes(q.text));
+
+            // Jika semua soal di level ini sudah habis, reset history untuk level ini agar bisa diulang
+            if (eligible.length === 0) {
+                const diffQuestions = QUESTION_DB.filter(q => q.difficulty === difficulty).map(q => q.text);
+                state.askedQuestions = state.askedQuestions.filter(text => !diffQuestions.includes(text));
+                eligible = QUESTION_DB.filter(q => q.difficulty === difficulty);
+            }
+
+            const q = eligible[Math.floor(Math.random() * eligible.length)];
+            state.askedQuestions.push(q.text); // Catat soal agar tidak diulang
+            return q;
+        }
+
+        function openQuestion() {
+            const modal = document.getElementById('question-modal');
+
+            // Ambil soal unik berdasarkan Level
+            const q = getQuestionByDifficulty();
+
+            document.getElementById('q-category').innerText = `${q.category} (${q.difficulty.toUpperCase()})`;
+            document.getElementById('q-text').innerText = q.text;
+            const opts = document.getElementById('q-options');
+            opts.innerHTML = '';
+
+            [...q.options].sort(() => Math.random() - 0.5).forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(opt, q.correct, btn, q);
+                opts.appendChild(btn);
+            });
+            modal.style.display = 'flex';
+        }
+
+        function checkAnswer(selected, correct, btn, questionObj) {
+            const allBtns = document.querySelectorAll('.answer-btn');
+            allBtns.forEach(b => b.disabled = true);
+
+            if (selected === correct) {
+                btn.classList.add('correct');
+                playSound('correct');
+                // Log correct answer
+                state.correctAnswersLog.push({
+                    cat: questionObj.category,
+                    q: questionObj.text,
+                    a: correct,
+                    lvl: questionObj.difficulty.toUpperCase()
+                });
+
+                setTimeout(() => {
+                    // Reward varies by difficulty
+                    let baseReward = 5;
+                    if (questionObj.difficulty === 'medium') baseReward = 7.5;
+                    if (questionObj.difficulty === 'hard') baseReward = 10;
+
+                    let reward = baseReward + Math.floor(Math.random() * 2);
+                    state.money += reward;
+                    showNotification(`Benar! +Rp ${reward.toLocaleString()}`);
+                    updateHUD();
+                    closeModal('question-modal');
+                }, 1000);
+            } else {
+                btn.classList.add('wrong');
+                playSound('wrong');
+                allBtns.forEach(b => { if (b.innerText === correct) b.classList.add('correct'); });
+                setTimeout(() => {
+                    showNotification("Salah!");
+                    closeModal('question-modal');
+                }, 1500);
+            }
+        }
+
+        function openShop() {
+            const modal = document.getElementById('shop-modal');
+            const container = document.getElementById('shop-container');
+            container.innerHTML = '';
+            // Display all heroes in shop
+            HERO_DB.forEach(hero => {
+                container.appendChild(createCard(hero, true));
+            });
+            modal.style.display = 'flex';
+        }
+
+        function buyHero(hero) {
+            // Maksimal 5 Hero (sesuai permintaan)
+            if (state.myHeroes.length >= 5) { showNotification("Tim Penuh (Maks 5)!"); return; }
+            if (state.money < hero.price) { showNotification("Dana Kurang!"); return; }
+
+            state.money -= hero.price;
+            // Add a fresh copy of the hero object
+            state.myHeroes.push({ ...hero });
+            updateHUD();
+
+            // Me-render ulang monster (karena jika beli pahlawan Lunar, power monster di kartu juga akan otomatis turun 30)
+            const currentMonsterData = MONSTER_LEVELS.find(m => m.level === state.level);
+            if (currentMonsterData) renderMonster(currentMonsterData);
+
+            renderHeroes();
+            showNotification(`+ ${hero.name}`);
+            closeModal('shop-modal');
+            playSound('buy');
+        }
+
+        // --- DISCARD HERO FUNCTION ---
+        let heroToDiscardIndex = null; // Menyimpan index hero yang akan dihapus
+
+        function discardHero(index) {
+            // Munculkan custom modal konfirmasi pembuangan hero
+            heroToDiscardIndex = index;
+            document.getElementById('discard-confirm-modal').style.display = 'flex';
+        }
+
+        // Eksekusi fungsi ini jika pemain menekan tombol "Ya, Buang" di dalam modal
+        function executeDiscard() {
+            if (heroToDiscardIndex !== null) {
+                const removedHero = state.myHeroes[heroToDiscardIndex];
+                // Hapus hero dari array berdasarkan index
+                state.myHeroes.splice(heroToDiscardIndex, 1);
+
+                // Render ulang tampilan
+                updateHUD();
+
+                // Kembalikan visual status monster di arena (jika yang dibuang adalah pahlawan Lunar)
+                const currentMonsterData = MONSTER_LEVELS.find(m => m.level === state.level);
+                if (currentMonsterData) renderMonster(currentMonsterData);
+
+                renderHeroes();
+
+                showNotification(`- ${removedHero.name} Dibuang`);
+
+                // Reset index dan tutup modal
+                heroToDiscardIndex = null;
+                closeModal('discard-confirm-modal');
+            }
+        }
+
+        // --- FULLSCREEN LOGIC ---
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    alert(`Error trying to enable fullscreen mode: ${err.message} (${err.name})`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // --- UTILS ---
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        function showNotification(txt) {
+            const el = document.getElementById('notification');
+            el.innerText = txt;
+            el.style.opacity = '1';
+            el.style.top = '50%';
+            setTimeout(() => { el.style.opacity = '0'; el.style.top = '20%'; }, 1500);
+        }
+
+        function playSound(type) {
+            const sounds = {
+                'correct': document.getElementById('sfx-correct'),
+                'wrong': document.getElementById('sfx-wrong'),
+                'buy': document.getElementById('sfx-buy'),
+                'levelup': document.getElementById('sfx-levelup')
+            };
+
+            const el = sounds[type];
+            if (el) {
+                el.currentTime = 0;
+                el.play().catch(e => console.log("Audio play prevented:", e));
+            }
+        }
+
+        // Audio Control
+        const bgm = document.getElementById('bgm');
+        const musicBtn = document.getElementById('music-btn');
+        let isMusicPlaying = false;
+        function toggleMusic(forcePlay = false) {
+            if (!isMusicPlaying || forcePlay) {
+                bgm.play().then(() => {
+                    musicBtn.innerHTML = "🔊";
+                    musicBtn.classList.add('playing');
+                    isMusicPlaying = true;
+                }).catch(() => { });
+            } else {
+                bgm.pause();
+                musicBtn.innerHTML = "🔇";
+                musicBtn.classList.remove('playing');
+                isMusicPlaying = false;
+            }
+        }
+
+        // --- TUJUAN PEMBELAJARAN (TP) ---
+        const TP_DATA = {
+            mindful: {
+                icon: "🧠",
+                title: "Berkesadaran (Mindful)",
+                body: `Peserta didik mampu <strong style="color:#ffd700">memahami proses berpikir</strong> dalam menyusun algoritma dan menulis program, serta <strong style="color:#ffd700">merefleksikan kesalahan</strong> yang ditemukan untuk memperbaiki solusi yang dibuat.<br><br>
+                Dalam game ini, kamu dilatih untuk:<br>
+                • Menyusun strategi sebelum menyerang Bug<br>
+                • Merefleksikan pilihan hero mana yang paling efektif<br>
+                • Belajar dari setiap jawaban yang salah`,
+                contoh: `💡 <strong>Contoh Penerapan:</strong> Saat menjawab soal dan jawabanmu salah, perhatikan jawaban yang benar dan pahami mengapa itu benar — itulah proses berpikir reflektif!`
+            },
+            meaningful: {
+                icon: "🔗",
+                title: "Bermakna (Meaningful)",
+                body: `Peserta didik mampu <strong style="color:#ffd700">menghubungkan konsep algoritma dan pemrograman</strong> dengan permasalahan nyata serta <strong style="color:#ffd700">menerapkannya untuk menghasilkan solusi</strong> yang relevan dan bermanfaat.<br><br>
+                Dalam game ini, kamu dilatih untuk:<br>
+                • Memahami bahwa algoritma adalah solusi untuk masalah nyata<br>
+                • Menghubungkan konsep variabel, loop, dan fungsi ke kehidupan sehari-hari<br>
+                • Melihat pemrograman sebagai alat untuk membangun sesuatu yang berguna`,
+                contoh: `💡 <strong>Contoh Penerapan:</strong> Bug Syntax Error di Level 1 merepresentasikan masalah nyata programmer pemula — kamu belajar cara "debug" lewat soal-soal yang relevan!`
+            },
+            joyful: {
+                icon: "🎉",
+                title: "Menggembirakan (Joyful)",
+                body: `Peserta didik mampu <strong style="color:#ffd700">mengeksplorasi berbagai cara penyelesaian masalah</strong> melalui aktivitas pemrograman yang <strong style="color:#ffd700">menarik, menantang, dan mendorong kreativitas</strong>.<br><br>
+                Dalam game ini, kamu dilatih untuk:<br>
+                • Menyusun kombinasi tim hero yang berbeda-beda secara kreatif<br>
+                • Menghadapi tantangan Bug yang semakin sulit di setiap level<br>
+                • Merasakan kesenangan belajar melalui mekanisme game yang seru`,
+                contoh: `💡 <strong>Contoh Penerapan:</strong> Ada banyak kombinasi tim hero untuk mengalahkan Bug Boss — coba eksplorasi strategi berbeda setiap main!`
+            }
+        };
+
+        function showTP(key) {
+            const tp = TP_DATA[key];
+            document.getElementById('tp-modal-icon').innerText = tp.icon;
+            document.getElementById('tp-modal-title').innerHTML = tp.title;
+            document.getElementById('tp-modal-body').innerHTML = tp.body;
+            document.getElementById('tp-modal-contoh').innerHTML = tp.contoh;
+            document.getElementById('tp-modal').style.display = 'flex';
+        }
+
+    </script> <!-- PANEL TP IN-GAME (dipanggil dari HUD) -->
+    <div class="modal-overlay" id="hud-tp-panel" style="display:none;">
+        <div class="modal-content" style="max-width:480px;">
+            <div
+                style="font-family:'Orbitron',sans-serif;font-size:1.3rem;font-weight:900;color:var(--neon-cyan);margin-bottom:1rem;text-transform:uppercase;letter-spacing:2px;text-shadow:0 0 10px rgba(0,245,255,0.5);">
+                📚 Tujuan Pembelajaran</div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:1.2rem;">
+                <button class="action-btn" style="font-size:clamp(0.72rem,1.4vw,0.9rem);padding:0.4rem 0.9rem;"
+                    onclick="showTP('mindful')">🧠 Berkesadaran</button>
+                <button class="action-btn" style="font-size:clamp(0.72rem,1.4vw,0.9rem);padding:0.4rem 0.9rem;"
+                    onclick="showTP('meaningful')">🔗 Bermakna</button>
+                <button class="action-btn" style="font-size:clamp(0.72rem,1.4vw,0.9rem);padding:0.4rem 0.9rem;"
+                    onclick="showTP('joyful')">🎉 Menggembirakan</button>
+            </div>
+            <button class="btn btn-red" onclick="document.getElementById('hud-tp-panel').style.display='none'">Tutup
+                ✕</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="tp-modal">
+        <div class="modal-content" style="max-width:520px;">
+            <div id="tp-modal-icon" style="font-size:2.5rem;margin-bottom:0.4rem;"></div>
+            <div id="tp-modal-title" class="modal-header"
+                style="color:var(--neon-cyan);border-bottom-color:rgba(0,245,255,0.2);"></div>
+            <div id="tp-modal-body"
+                style="font-size:clamp(0.88rem,2vw,1rem);line-height:1.7;color:#a0d4e8;text-align:left;background:rgba(0,245,255,0.04);padding:1rem;border-radius:6px;margin-bottom:1rem;border:1px solid rgba(0,245,255,0.15);">
+            </div>
+            <div id="tp-modal-contoh"
+                style="font-size:clamp(0.8rem,1.6vw,0.92rem);color:var(--neon-cyan);background:rgba(0,245,255,0.07);border:1px solid rgba(0,245,255,0.25);padding:0.8rem 1rem;border-radius:6px;text-align:left;">
+            </div>
+            <button class="btn btn-blue" style="margin-top:1.2rem;" onclick="closeModal('tp-modal')">Tutup ✕</button>
+        </div>
+    </div>
+
+</body>
+</html>
